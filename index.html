@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สรุปติวสอบ & คลังโจทย์อัลกอริทึม ปี 1</title>
+    <!-- Use allowed Tailwind CDN -->
+    <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+    <style>
+        .slide { display: none; }
+        .slide.active { display: flex; flex-direction: column; animation: slideIn 0.35s ease-out; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .shake-box { animation: shake 0.4s ease-in-out; }
+        pre, code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+        /* Smooth scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border, #cbd5e1); border-radius: 9999px; }
+    </style>
+</head>
+<body class="bg-[var(--background,#f8fafc)] text-[var(--foreground,#0f172a)] h-screen w-screen overflow-hidden antialiased flex flex-col font-sans select-none">
+
+    <!-- Top Navigation & Progress Bar -->
+    <header class="bg-[var(--card,#ffffff)] border-b border-[var(--border,#e2e8f0)] px-6 py-3 flex justify-between items-center shrink-0 shadow-sm z-30">
+        <div class="flex items-center space-x-3">
+            <span class="text-2xl">🎓</span>
+            <div>
+                <h1 class="text-sm font-bold text-[var(--primary,#2563eb)]">คู่มือติวสอบ & Challenge อัลกอริทึม (ปี 1)</h1>
+                <p class="text-xs text-[var(--muted-foreground,#64748b)]">บทที่ 6: การวิเคราะห์ปัญหาและการออกแบบอัลกอริทึม</p>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <!-- Jump to Section dropdown -->
+            <select id="jump-select" onchange="jumpToSlide(parseInt(this.value))" class="text-xs bg-[var(--background,#f1f5f9)] border border-[var(--border,#cbd5e1)] rounded-lg px-2 py-1.5 focus:outline-none cursor-pointer">
+                <optgroup label="📖 ส่วนสรุปทฤษฎี & จำลอง">
+                    <option value="1">1. ปก & สารบัญ</option>
+                    <option value="2">2. วงจรพัฒนาโปรแกรม (PLC)</option>
+                    <option value="3">3. เครื่องจักร IPO (Interactive)</option>
+                    <option value="4">4. กล่องตัวแปร vs ค่าคงที่</option>
+                    <option value="5">5. สัญลักษณ์ผังงาน (Flowchart)</option>
+                    <option value="6">6. โครงสร้างการทำงาน 3 แบบ</option>
+                    <option value="7">7. เครื่องจำลอง Desk Check</option>
+                </optgroup>
+                <optgroup label="✍️ โซนฝึกเขียนรหัสเทียมลงกระดาษ">
+                    <option value="8">8. แนะนำ Coding Challenge</option>
+                    <option value="9">ภารกิจ 1: หาพื้นที่สี่เหลี่ยมผืนผ้า (ลำดับ)</option>
+                    <option value="10">ภารกิจ 2: ปริมาตรทรงกระบอก (ค่าคงที่ PI)</option>
+                    <option value="11">ภารกิจ 3: คำนวณค่าดัชนีมวลกาย BMI</option>
+                    <option value="12">ภารกิจ 4: ส่วนลด 1 เงื่อนไข (IF..THEN)</option>
+                    <option value="13">ภารกิจ 5: ส่วนลด 2 ทางเลือก (IF..ELSE)</option>
+                    <option value="14">ภารกิจ 6: ส่วนลดหลายระดับ (ขั้นบันได)</option>
+                    <option value="15">ภารกิจ 7: ผลรวมสินค้า 5 ชิ้น (FOR Loop)</option>
+                    <option value="16">ภารกิจ 8: ป้อนราคาจนกว่าจะใส่ 0 (WHILE)</option>
+                    <option value="17">ภารกิจ 9: ตรวจสอบจำนวนสินค้า (DO..WHILE)</option>
+                    <option value="18">18. สรุปเช็กลิสต์ก่อนเข้าห้องสอบ</option>
+                </optgroup>
+            </select>
+            <span id="slide-num-badge" class="px-2.5 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200 text-xs font-bold rounded-full">1 / 18</span>
+        </div>
+    </header>
+
+    <!-- Top Progress Line -->
+    <div class="w-full h-1 bg-[var(--border,#e2e8f0)]">
+        <div id="progress-bar" class="h-full bg-[var(--primary,#2563eb)] transition-all duration-300" style="width: 5%;"></div>
+    </div>
+
+    <!-- MAIN SLIDE CONTAINER -->
+    <main class="flex-grow flex flex-col items-center justify-start p-4 md:p-6 relative overflow-y-auto w-full max-w-5xl mx-auto">
+
+        <!-- ============================================== -->
+        <!-- SLIDE 1: หน้าแรก -->
+        <!-- ============================================== -->
+        <div id="slide-1" class="slide active w-full my-auto text-center">
+            <div class="bg-[var(--card,#ffffff)] p-8 md:p-12 rounded-3xl border border-[var(--border,#e2e8f0)] shadow-lg max-w-3xl mx-auto">
+                <div class="inline-block p-4 bg-blue-50 dark:bg-slate-800 rounded-2xl mb-5 shadow-inner">
+                    <span class="text-6xl">🚀</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-black text-[var(--foreground,#0f172a)] mb-3 tracking-tight">สรุปติวสอบ & ตะลุยโจทย์</h1>
+                <h2 class="text-xl md:text-2xl font-bold text-blue-600 mb-4">การวิเคราะห์ปัญหา & ออกแบบอัลกอริทึม</h2>
+                <p class="text-sm md:text-base text-[var(--muted-foreground,#64748b)] max-w-xl mx-auto mb-8">
+                    เน้นภาพรวม ทฤษฎีที่ออกสอบบ่อย พร้อมของเล่น Interactive และ <b>"โซนฝึกเขียนรหัสเทียมลงกระดาษจริง"</b> เพื่อให้น้องๆ ปี 1 พร้อมทำข้อสอบอัตนัยและปรนัยแบบมั่นใจเต็ม 100!
+                </p>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-lg mx-auto mb-8 text-xs font-semibold text-[var(--foreground,#0f172a)]">
+                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">🎯 PLC 6 ขั้นตอน</div>
+                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📥 IPO Model</div>
+                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📦 กล่องตัวแปร</div>
+                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📊 ผังงาน Flowchart</div>
+                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">🔁 เจาะลึก 3 Loop</div>
+                    <div class="p-3 bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 rounded-xl border border-amber-300">✍️ 9 โจทย์เขียนกระดาษ</div>
+                </div>
+
+                <button onclick="nextSlide()" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 text-base">
+                    เริ่มตะลุยบทเรียน ▶
+                </button>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 2: PLC วงจรพัฒนาโปรแกรม -->
+        <!-- ============================================== -->
+        <div id="slide-2" class="slide w-full">
+            <div class="text-center mb-4">
+                <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">ทฤษฎีสำคัญข้อสอบช้อยส์</span>
+                <h2 class="text-2xl md:text-3xl font-black mt-2">1. วงจรพัฒนาโปรแกรม (Programming Life Cycle)</h2>
+                <p class="text-xs md:text-sm text-[var(--muted-foreground,#64748b)]">โปรแกรมไม่ได้เดินเป็นเส้นตรงทางเดียว! แต่เป็น <b>วงกลมที่มี Feedback Loop</b> ย้อนกลับได้</p>
+            </div>
+
+            <!-- Interactive PLC Grid & Flow -->
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+                <div onclick="selectPLC(1)" id="plc-card-1" class="plc-card cursor-pointer p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 dark:bg-blue-950/40 transition shadow-sm">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-2xl">1️⃣</span>
+                        <span class="text-[10px] font-bold px-2 py-0.5 bg-blue-600 text-white rounded-full">สำคัญสุด</span>
+                    </div>
+                    <h3 class="font-bold text-sm">วิเคราะห์ปัญหา</h3>
+                    <p class="text-xs text-[var(--muted-foreground,#64748b)]">Problem Analysis (ใช้ IPO)</p>
+                </div>
+
+                <div onclick="selectPLC(2)" id="plc-card-2" class="plc-card cursor-pointer p-4 rounded-2xl border-2 border-transparent bg-[var(--card,#ffffff)] hover:border-slate-300 transition shadow-sm">
+                    <span class="text-2xl mb-1 block">2️⃣</span>
+                    <h3 class="font-bold text-sm">ออกแบบโปรแกรม</h3>
+                    <p class="text-xs text-[var(--muted-foreground,#64748b)]">Program Design (อัลกอริทึม/ผังงาน)</p>
+                </div>
+
+                <div onclick="selectPLC(3)" id="plc-card-3" class="plc-card cursor-pointer p-4 rounded-2xl border-2 border-transparent bg-[var(--card,#ffffff)] hover:border-slate-300 transition shadow-sm">
+                    <span class="text-2xl mb-1 block">3️⃣</span>
+                    <h3 class="font-bold text-sm">เขียนโปรแกรม</h3>
+                    <p class="text-xs text-[var(--muted-foreground,#64748b)]">Coding (แปลงเป็นภาษาโปรแกรม)</p>
+                </div>
+
+                <div onclick="selectPLC(4)" id="plc-card-4" class="plc-card cursor-pointer p-4 rounded-2xl border-2 border-transparent bg-[var(--card,#ffffff)] hover:border-slate-300 transition shadow-sm">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-2xl">4️⃣</span>
+                        <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-500 text-white rounded-full">จุดย้อนกลับ</span>
+                    </div>
+                    <h3 class="font-bold text-sm">ทดสอบโปรแกรม</h3>
+                    <p class="text-xs text-[var(--muted-foreground,#64748b)]">Testing (หา Syntax/Logic Error)</p>
+                </div>
+
+                <div onclick="selectPLC(5)" id="plc-card-5" class="plc-card cursor-pointer p-4 rounded-2xl border-2 border-transparent bg-[var(--card,#ffffff)] hover:border-slate-300 transition shadow-sm">
+                    <span class="text-2xl mb-1 block">5️⃣</span>
+                    <h3 class="font-bold text-sm">จัดทำเอกสาร</h3>
+                    <p class="text-xs text-[var(--muted-foreground,#64748b)]">Documentation (คู่มือผู้ใช้/นักพัฒนา)</p>
+                </div>
+
+                <div onclick="selectPLC(6)" id="plc-card-6" class="plc-card cursor-pointer p-4 rounded-2xl border-2 border-transparent bg-[var(--card,#ffffff)] hover:border-slate-300 transition shadow-sm">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-2xl">6️⃣</span>
+                        <span class="text-[10px] font-bold px-2 py-0.5 bg-emerald-600 text-white rounded-full">ใช้งบเยอะสุด</span>
+                    </div>
+                    <h3 class="font-bold text-sm">บำรุงรักษา</h3>
+                    <p class="text-xs text-[var(--muted-foreground,#64748b)]">Maintenance (ปรับตามโจทย์ใหม่)</p>
+                </div>
+            </div>
+
+            <!-- Detail Display Area -->
+            <div id="plc-detail-box" class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-5 rounded-2xl shadow-md">
+                <div class="flex items-start space-x-3">
+                    <span id="plc-icon" class="text-3xl">🔍</span>
+                    <div>
+                        <h4 id="plc-title" class="font-bold text-base text-blue-600">กล่องที่ 1: การวิเคราะห์ปัญหา (Problem Analysis)</h4>
+                        <p id="plc-desc" class="text-xs md:text-sm text-[var(--foreground,#0f172a)] mt-1">
+                            เป็นจุดเริ่มต้นของทุกอย่าง ทำความเข้าใจว่า <b>ปัญหาคืออะไร? ผู้ใช้ต้องการอะไร? ข้อมูลเข้า (Input) คืออะไร?</b> และ <b>ผลลัพธ์ (Output) คืออะไร?</b> หากขั้นตอนนี้ผิดพลาด ขั้นตอนที่เหลือทั้งหมดจะผิดตาม!
+                        </p>
+                        <div id="plc-loop-note" class="mt-2 text-xs font-semibold text-emerald-600 flex items-center space-x-1">
+                            <span>➡️ ส่งต่อ: "ข้อกำหนดของปัญหา" (Problem Specification) ให้กับขั้นที่ 2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Memory Hook Tips -->
+            <div class="mt-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 p-3 rounded-xl flex items-center justify-between text-xs text-amber-900 dark:text-amber-200">
+                <span>💡 <b>สูตรจำเข้าห้องสอบ:</b> วิเคราะห์ ➔ ออกแบบ ➔ โค้ด ➔ ทดสอบ ➔ เอกสาร ➔ บำรุงรักษา</span>
+                <span class="hidden md:inline font-mono text-[11px] bg-amber-200 dark:bg-amber-800 px-2 py-0.5 rounded">ทดสอบพบ Bug ➔ ย้อนไปโค้ด/ออกแบบใหม่</span>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 3: IPO Machine Interactive -->
+        <!-- ============================================== -->
+        <div id="slide-3" class="slide w-full">
+            <div class="text-center mb-3">
+                <span class="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-full">แนวคิดหัวใจหลัก</span>
+                <h2 class="text-2xl md:text-3xl font-black mt-2">2. โรงงานแนวคิด IPO (Input ➔ Process ➔ Output)</h2>
+                <p class="text-xs md:text-sm text-[var(--muted-foreground,#64748b)]">ลองเล่นเครื่องจักร IPO ด้านล่างเพื่อดูว่าข้อมูลเดินทางอย่างไรในคอมพิวเตอร์</p>
+            </div>
+
+            <!-- Interactive IPO Machine -->
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] rounded-3xl p-5 md:p-6 shadow-md mb-4">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    
+                    <!-- 1. INPUT -->
+                    <div class="w-full md:w-1/3 p-4 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 rounded-2xl text-center">
+                        <div class="text-2xl mb-1">📥</div>
+                        <h3 class="font-bold text-sm text-blue-700 dark:text-blue-300">1. INPUT (นำเข้า)</h3>
+                        <p class="text-[11px] text-[var(--muted-foreground,#64748b)] mb-3">รับข้อมูลที่จำเป็นต้องใช้</p>
+                        <div class="space-y-2 text-left text-xs">
+                            <div>
+                                <label class="font-semibold text-gray-700 dark:text-gray-300">ความกว้าง (width):</label>
+                                <input type="number" id="ipo-w" value="5" class="w-full mt-0.5 px-2.5 py-1.5 border rounded-lg bg-[var(--background,#ffffff)] text-sm">
+                            </div>
+                            <div>
+                                <label class="font-semibold text-gray-700 dark:text-gray-300">ความยาว (length):</label>
+                                <input type="number" id="ipo-l" value="8" class="w-full mt-0.5 px-2.5 py-1.5 border rounded-lg bg-[var(--background,#ffffff)] text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ARROW & BUTTON -->
+                    <div class="flex flex-col items-center">
+                        <button onclick="runIPOMachine()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md hover:scale-105 transition text-xs flex items-center space-x-1.5">
+                            <span>⚙️ สั่งประมวลผล</span>
+                        </button>
+                        <span class="text-xs text-[var(--muted-foreground,#64748b)] mt-1">คลิกปุ่มนี้ 👆</span>
+                    </div>
+
+                    <!-- 2. PROCESS -->
+                    <div class="w-full md:w-1/3 p-4 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 rounded-2xl text-center">
+                        <div class="text-2xl mb-1">⚙️</div>
+                        <h3 class="font-bold text-sm text-amber-700 dark:text-amber-300">2. PROCESS (คำนวณ)</h3>
+                        <p class="text-[11px] text-[var(--muted-foreground,#64748b)] mb-3">สูตรหรือเงื่อนไขจัดการข้อมูล</p>
+                        <div id="ipo-proc-box" class="p-3 bg-[var(--background,#ffffff)] rounded-xl border border-amber-200 font-mono text-xs text-amber-900 dark:text-amber-300">
+                            area = width * length
+                        </div>
+                        <div id="ipo-calc-step" class="text-[11px] text-gray-500 mt-2 font-mono">
+                            รอกดปุ่มประมวลผล...
+                        </div>
+                    </div>
+
+                    <!-- 3. OUTPUT -->
+                    <div class="w-full md:w-1/3 p-4 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 rounded-2xl text-center">
+                        <div class="text-2xl mb-1">📤</div>
+                        <h3 class="font-bold text-sm text-purple-700 dark:text-purple-300">3. OUTPUT (แสดงผล)</h3>
+                        <p class="text-[11px] text-[var(--muted-foreground,#64748b)] mb-3">ผลลัพธ์ที่โจทย์ต้องการ</p>
+                        <div id="ipo-result" class="text-2xl font-black text-purple-700 dark:text-purple-300 p-2.5 bg-[var(--background,#ffffff)] rounded-xl border border-purple-200">
+                            40
+                        </div>
+                        <span class="text-[10px] text-purple-600 mt-1 block">หน่วย: ตารางหน่วย</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Theory Summary 5 Topics -->
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl">
+                <h4 class="font-bold text-xs text-blue-600 mb-2">📌 กรอบวิเคราะห์โจทย์ 5 หัวข้อ (ออกสอบบ่อยมาก):</h4>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-xs">
+                    <div class="p-2 bg-[var(--background,#f1f5f9)] rounded-lg"><b>1. สิ่งที่ต้องการ:</b> เป้าหมายงาน</div>
+                    <div class="p-2 bg-[var(--background,#f1f5f9)] rounded-lg"><b>2. รูปแบบผลลัพธ์:</b> หน้าตา Output</div>
+                    <div class="p-2 bg-[var(--background,#f1f5f9)] rounded-lg"><b>3. ข้อมูลนำเข้า:</b> ตัวเลข/ข้อความที่ป้อน</div>
+                    <div class="p-2 bg-[var(--background,#f1f5f9)] rounded-lg"><b>4. ตัวแปร:</b> ชื่อและชนิดตัวแปร</div>
+                    <div class="p-2 bg-[var(--background,#f1f5f9)] rounded-lg"><b>5. การประมวลผล:</b> ลำดับขั้นตอนวิธี</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 4: ตัวแปร vs ค่าคงที่ Interactive -->
+        <!-- ============================================== -->
+        <div id="slide-4" class="slide w-full">
+            <div class="text-center mb-4">
+                <span class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full">พื้นฐานความจำ</span>
+                <h2 class="text-2xl md:text-3xl font-black mt-2">3. ตัวแปร (Variables) vs ค่าคงที่ (Constants)</h2>
+                <p class="text-xs md:text-sm text-[var(--muted-foreground,#64748b)]">ลองกดปุ่มด้านล่างเพื่อสังเกตพฤติกรรมของกล่องทั้งสองแบบ</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
+                
+                <!-- Variable Box -->
+                <div class="bg-[var(--card,#ffffff)] border-2 border-blue-400 p-5 rounded-3xl shadow-sm text-center">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold px-2 py-0.5 bg-blue-100 text-blue-700 rounded-md">เปลี่ยนค่าได้เสมอ</span>
+                        <span class="text-xl">📦</span>
+                    </div>
+                    <h3 class="font-bold text-lg text-blue-600">กล่องตัวแปร: score</h3>
+                    <p class="text-xs text-[var(--muted-foreground,#64748b)] mb-4">ค่าใหม่จะ "ทับ" ค่าเก่าทันที (Overwrite)</p>
+
+                    <div id="var-box-visual" class="w-28 h-28 mx-auto bg-blue-50 dark:bg-blue-950/60 border-4 border-dashed border-blue-400 rounded-2xl flex flex-col items-center justify-center mb-4 transition duration-300">
+                        <span class="text-[10px] text-gray-500 font-mono">ค่าปัจจุบัน:</span>
+                        <span id="var-score-val" class="text-4xl font-black text-blue-600">50</span>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-1.5 text-xs">
+                        <button onclick="updateVar(35)" class="p-2 bg-[var(--background,#f1f5f9)] hover:bg-blue-100 rounded-lg font-mono border">SET = 35</button>
+                        <button onclick="updateVar(65)" class="p-2 bg-[var(--background,#f1f5f9)] hover:bg-blue-100 rounded-lg font-mono border">SET = 65</button>
+                        <button onclick="addVar(10)" class="p-2 bg-[var(--background,#f1f5f9)] hover:bg-blue-100 rounded-lg font-mono border">+ 10</button>
+                    </div>
+                    <p id="var-action-desc" class="text-[11px] text-blue-600 mt-2 font-mono">เริ่มต้น: SET score = 50</p>
+                </div>
+
+                <!-- Constant Box -->
+                <div class="bg-[var(--card,#ffffff)] border-2 border-rose-400 p-5 rounded-3xl shadow-sm text-center">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold px-2 py-0.5 bg-rose-100 text-rose-700 rounded-md">🔒 ล็อคห้ามเปลี่ยน</span>
+                        <span class="text-xl">🛡️</span>
+                    </div>
+                    <h3 class="font-bold text-lg text-rose-600">กล่องค่าคงที่: PI</h3>
+                    <p class="text-xs text-[var(--muted-foreground,#64748b)] mb-4">กำหนดค่าไว้ครั้งแรกแล้ว ห้ามแก้ไขเด็ดขาด</p>
+
+                    <div id="const-box-visual" class="w-28 h-28 mx-auto bg-rose-50 dark:bg-rose-950/60 border-4 border-rose-400 rounded-2xl flex flex-col items-center justify-center mb-4 transition duration-300">
+                        <span class="text-[10px] text-gray-500 font-mono">ค่าตายตัว:</span>
+                        <span class="text-3xl font-black text-rose-600">3.14</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2 text-xs">
+                        <button onclick="tryEditConst(3.1415)" class="p-2 bg-[var(--background,#f1f5f9)] hover:bg-rose-100 rounded-lg font-mono border">ลองแก้เป็น 3.1415</button>
+                        <button onclick="tryEditConst(0)" class="p-2 bg-[var(--background,#f1f5f9)] hover:bg-rose-100 rounded-lg font-mono border">ลองแก้เป็น 0</button>
+                    </div>
+                    <p id="const-action-desc" class="text-[11px] text-gray-500 mt-2 font-mono">ปลอดภัย: ค่าคงที่ยังคงเป็น 3.14</p>
+                </div>
+
+            </div>
+
+            <!-- Data Types Note -->
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl text-xs flex flex-wrap justify-around gap-2 text-center">
+                <span class="px-2 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg">🔢 <b>จำนวนเต็ม (Integer):</b> 1, 2, 5 ชิ้น</span>
+                <span class="px-2 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg">🎯 <b>จำนวนจริง (Real/Float):</b> 25.50 บาท, 3.14</span>
+                <span class="px-2 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg">🔤 <b>ข้อความ (String):</b> "สมชาย", "0812345678"*</span>
+                <span class="px-2 py-1 bg-gray-100 dark:bg-slate-800 rounded-lg">⚖️ <b>ตรรกะ (Boolean):</b> TRUE, FALSE</span>
+            </div>
+            <p class="text-[11px] text-[var(--muted-foreground,#64748b)] text-center mt-1.5">*ข้อสอบชอบหลอก: เบอร์โทร และ รหัสนักศึกษา เป็น <b>ข้อความ (String)</b> เพราะไม่ได้นำไปคำนวณ!</p>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 5: สัญลักษณ์ผังงาน (Flowchart) -->
+        <!-- ============================================== -->
+        <div id="slide-5" class="slide w-full">
+            <div class="text-center mb-3">
+                <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full">จำรูปทรงให้แม่น</span>
+                <h2 class="text-2xl md:text-3xl font-black mt-2">4. สัญลักษณ์ผังงานมาตรฐาน (Flowchart)</h2>
+                <p class="text-xs md:text-sm text-[var(--muted-foreground,#64748b)]">คลิกสัญลักษณ์แต่ละอันเพื่อดูความหมายและตัวอย่างคำสั่งรหัสเทียม</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                
+                <!-- Terminal -->
+                <div onclick="selectFlow('terminal')" class="flow-card cursor-pointer p-4 bg-[var(--card,#ffffff)] border-2 border-blue-400 rounded-2xl text-center hover:scale-102 transition shadow-sm">
+                    <div class="w-20 h-8 mx-auto border-2 border-blue-500 rounded-full flex items-center justify-center text-xs font-bold text-blue-600 mb-2 bg-blue-50">
+                        แคปซูล
+                    </div>
+                    <h3 class="font-bold text-sm">Terminal</h3>
+                    <p class="text-[11px] text-[var(--muted-foreground,#64748b)]">เริ่มต้น / สิ้นสุด</p>
+                </div>
+
+                <!-- Input/Output -->
+                <div onclick="selectFlow('io')" class="flow-card cursor-pointer p-4 bg-[var(--card,#ffffff)] border-2 border-transparent hover:border-slate-300 rounded-2xl text-center hover:scale-102 transition shadow-sm">
+                    <div class="w-20 h-8 mx-auto border-2 border-purple-500 transform -skew-x-12 flex items-center justify-center text-xs font-bold text-purple-600 mb-2 bg-purple-50">
+                        <span class="transform skew-x-12">ขนาน</span>
+                    </div>
+                    <h3 class="font-bold text-sm">Input / Output</h3>
+                    <p class="text-[11px] text-[var(--muted-foreground,#64748b)]">รับค่า / แสดงผล</p>
+                </div>
+
+                <!-- Process -->
+                <div onclick="selectFlow('proc')" class="flow-card cursor-pointer p-4 bg-[var(--card,#ffffff)] border-2 border-transparent hover:border-slate-300 rounded-2xl text-center hover:scale-102 transition shadow-sm">
+                    <div class="w-20 h-8 mx-auto border-2 border-emerald-500 flex items-center justify-center text-xs font-bold text-emerald-600 mb-2 bg-emerald-50">
+                        ผืนผ้า
+                    </div>
+                    <h3 class="font-bold text-sm">Process</h3>
+                    <p class="text-[11px] text-[var(--muted-foreground,#64748b)]">คำนวณ / กำหนดค่า</p>
+                </div>
+
+                <!-- Decision -->
+                <div onclick="selectFlow('decision')" class="flow-card cursor-pointer p-4 bg-[var(--card,#ffffff)] border-2 border-transparent hover:border-slate-300 rounded-2xl text-center hover:scale-102 transition shadow-sm">
+                    <div class="w-9 h-9 mx-auto border-2 border-rose-500 transform rotate-45 flex items-center justify-center text-[10px] font-bold text-rose-600 mb-2 bg-rose-50">
+                        <span class="transform -rotate-45">เงื่อนไข</span>
+                    </div>
+                    <h3 class="font-bold text-sm">Decision</h3>
+                    <p class="text-[11px] text-[var(--muted-foreground,#64748b)]">ตรวจสอบเงื่อนไข</p>
+                </div>
+
+            </div>
+
+            <!-- Flow Detail Box -->
+            <div id="flow-detail-box" class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-md">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <h4 id="flow-title" class="font-bold text-base text-blue-600">⭕ Terminal (จุดเริ่มต้น / จุดสิ้นสุด)</h4>
+                        <p id="flow-desc" class="text-xs md:text-sm text-[var(--foreground,#0f172a)] mt-1">
+                            ใช้บอกว่าโปรแกรมเริ่มทำงานตรงไหน และสิ้นสุดที่จุดใด อัลกอริทึมที่ดี <b>ต้องมีจุดสิ้นสุดเสมอ (Finiteness)</b> ห้ามทำงานวนลูปไม่รู้จบ
+                        </p>
+                    </div>
+                    <div class="bg-[var(--background,#f1f5f9)] px-3 py-1.5 rounded-lg border font-mono text-xs">
+                        คำสั่ง: <span id="flow-code" class="font-bold text-blue-600">BEGIN / END</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Good Flowchart Rules -->
+            <div class="mt-3 bg-blue-50 dark:bg-blue-950/30 p-3 rounded-xl border border-blue-200 text-xs text-blue-900 dark:text-blue-200">
+                <b>📌 กฎเหล็กของผังงานที่ดี:</b> ไหลจากบนลงล่าง หรือซ้ายไปขวา • ข้อความในกล่องต้องสั้นกระชับ • มีลูกศรชี้ทิศทาง • ไม่ควรลากเส้นตัดกันมั่ว (ให้ใช้จุดเชื่อมต่อ Connector ⭕ แทน)
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 6: 3 โครงสร้างการทำงาน & Loop Visualizer -->
+        <!-- ============================================== -->
+        <div id="slide-6" class="slide w-full">
+            <div class="text-center mb-3">
+                <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full">โครงสร้างควบคุม</span>
+                <h2 class="text-2xl md:text-3xl font-black mt-2">5. โครงสร้างการทำงาน 3 แบบ & เจาะลึก Loop</h2>
+                <p class="text-xs md:text-sm text-[var(--muted-foreground,#64748b)]">อัลกอริทึมทุกโปรแกรมบนโลกนี้ประกอบด้วย 3 โครงสร้างนี้เท่านั้น</p>
+            </div>
+
+            <!-- 3 Structures Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 text-xs">
+                <div class="p-4 bg-[var(--card,#ffffff)] border-l-4 border-blue-500 rounded-2xl shadow-sm">
+                    <span class="text-xl">⬇️</span>
+                    <h3 class="font-bold text-sm text-blue-600 mt-1">1. ลำดับ (Sequence)</h3>
+                    <p class="text-[var(--muted-foreground,#64748b)] mt-1">ทำทีละบรรทัดจากบนลงล่าง ไม่มีข้าม ไม่มีย้อนกลับ เช่น รับค่า ➔ คำนวณ ➔ แสดงผล</p>
+                </div>
+
+                <div class="p-4 bg-[var(--card,#ffffff)] border-l-4 border-amber-500 rounded-2xl shadow-sm">
+                    <span class="text-xl">🔀</span>
+                    <h3 class="font-bold text-sm text-amber-600 mt-1">2. เงื่อนไข (Selection)</h3>
+                    <p class="text-[var(--muted-foreground,#64748b)] mt-1">มีทางเลือกให้ตัดสินใจ (จริง/เท็จ) เช่น <code>IF..THEN</code>, <code>IF..ELSE</code>, ขั้นบันได</p>
+                </div>
+
+                <div class="p-4 bg-[var(--card,#ffffff)] border-l-4 border-emerald-500 rounded-2xl shadow-sm">
+                    <span class="text-xl">🔁</span>
+                    <h3 class="font-bold text-sm text-emerald-600 mt-1">3. วนซ้ำ (Iteration / Loop)</h3>
+                    <p class="text-[var(--muted-foreground,#64748b)] mt-1">ทำงานซ้ำชุดเดิมตามจำนวนครั้งหรือจนกว่าเงื่อนไขจะสั่งหยุด เช่น FOR, WHILE, DO..WHILE</p>
+                </div>
+            </div>
+
+            <!-- Loop Comparison Table with Visual Insight -->
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] rounded-2xl p-4 shadow-sm">
+                <h4 class="font-bold text-xs text-emerald-600 mb-2">🔍 ตารางเปรียบเทียบการวนซ้ำ (ข้อสอบออกชัวร์ 100%):</h4>
+                <div class="grid grid-cols-3 gap-2 text-xs">
+                    <div class="p-2.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 rounded-xl">
+                        <h5 class="font-bold text-emerald-800 dark:text-emerald-300">FOR</h5>
+                        <p class="text-[11px] mt-1"><b>เมื่อไหร่ใช้:</b> รู้จำนวนรอบแน่นอน</p>
+                        <p class="text-[11px] text-gray-500">มีตัวนับรอบจัดการให้ เช่น <code>FOR i = 1 TO 5</code></p>
+                        <span class="mt-2 block font-mono text-[10px] text-emerald-700">รอบต่ำสุด: 0 หรือตามช่วง</span>
+                    </div>
+
+                    <div class="p-2.5 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 rounded-xl">
+                        <h5 class="font-bold text-blue-800 dark:text-blue-300">WHILE</h5>
+                        <p class="text-[11px] mt-1"><b>เมื่อไหร่ใช้:</b> ไม่รู้จำนวนรอบแน่ชัด</p>
+                        <p class="text-[11px] text-gray-500"><b>เช็คเงื่อนไขก่อนทำ</b> ถ้าเท็จแต่แรกจะไม่ทำเลย</p>
+                        <span class="mt-2 block font-mono text-[10px] text-blue-700">รอบต่ำสุด: 0 ครั้ง</span>
+                    </div>
+
+                    <div class="p-2.5 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 rounded-xl">
+                        <h5 class="font-bold text-purple-800 dark:text-purple-300">DO..WHILE</h5>
+                        <p class="text-[11px] mt-1"><b>เมื่อไหร่ใช้:</b> วนรับค่าจนกว่าจะถูก</p>
+                        <p class="text-[11px] text-gray-500"><b>ทำก่อน 1 รอบเสมอ</b> แล้วค่อยตรวจเงื่อนไขท้ายรอบ</p>
+                        <span class="mt-2 block font-mono text-[10px] text-purple-700">รอบต่ำสุด: 1 ครั้งเสมอ!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 7: Desk Check Live Player -->
+        <!-- ============================================== -->
+        <div id="slide-7" class="slide w-full">
+            <div class="text-center mb-3">
+                <span class="px-3 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded-full">เทคนิคตรวจสอบโค้ด</span>
+                <h2 class="text-2xl md:text-3xl font-black mt-2">6. เครื่องจำลอง Desk Check (การไล่ค่าในตาราง)</h2>
+                <p class="text-xs md:text-sm text-[var(--muted-foreground,#64748b)]">คือการเอาปากกาทดค่าตัวแปรทีละบรรทัดด้วยตา เพื่อหา <b>Logic Error</b></p>
+            </div>
+
+            <!-- Desk Check Simulation -->
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] rounded-3xl p-5 shadow-md">
+                <div class="flex flex-col md:flex-row items-start gap-4">
+                    
+                    <!-- Left: Code snippet -->
+                    <div class="w-full md:w-5/12 bg-slate-900 text-slate-100 p-4 rounded-2xl text-xs font-mono">
+                        <div class="text-[10px] text-slate-400 mb-2 border-b border-slate-700 pb-1">อัลกอริทึม: หาผลรวมเลข 3 จำนวน</div>
+                        <div id="dc-code-1" class="p-1 rounded">1. BEGIN</div>
+                        <div id="dc-code-2" class="p-1 rounded">2. SET total = 0</div>
+                        <div id="dc-code-3" class="p-1 rounded">3. INPUT num1, num2, num3 (10, 20, 30)</div>
+                        <div id="dc-code-4" class="p-1 rounded">4. SET total = num1 + num2 + num3</div>
+                        <div id="dc-code-5" class="p-1 rounded">5. OUTPUT total</div>
+                        <div id="dc-code-6" class="p-1 rounded">6. END</div>
+                        
+                        <div class="mt-4 pt-2 border-t border-slate-700 flex space-x-2">
+                            <button onclick="stepDeskCheck()" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold">
+                                ⏩ ก้าวต่อไป (Step)
+                            </button>
+                            <button onclick="resetDeskCheck()" class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs">
+                                รีเซ็ต
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Table live update -->
+                    <div class="w-full md:w-7/12">
+                        <h4 class="font-bold text-xs text-slate-700 dark:text-slate-300 mb-2">ตาราง Desk Check Table:</h4>
+                        <div class="overflow-x-auto border border-[var(--border,#e2e8f0)] rounded-xl">
+                            <table class="w-full text-center text-xs border-collapse">
+                                <thead class="bg-[var(--background,#f1f5f9)] font-bold">
+                                    <tr class="border-b">
+                                        <th class="p-2 border-r">บรรทัด</th>
+                                        <th class="p-2 border-r">num1</th>
+                                        <th class="p-2 border-r">num2</th>
+                                        <th class="p-2 border-r">num3</th>
+                                        <th class="p-2 border-r">total</th>
+                                        <th class="p-2">หน้าจอ Output</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dc-tbody" class="divide-y divide-gray-100 font-mono">
+                                    <tr id="dc-row-init" class="text-gray-400">
+                                        <td colspan="6" class="p-3 text-center">กดปุ่ม "ก้าวต่อไป" ด้านซ้ายเพื่อเริ่มไล่โค้ด</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p id="dc-explain" class="text-xs text-blue-600 mt-2 font-medium">👉 กำลังรอเริ่มการทำงาน...</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 8: เข้าสู่โซน Paper Coding Arena -->
+        <!-- ============================================== -->
+        <div id="slide-8" class="slide w-full my-auto text-center">
+            <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-8 md:p-12 rounded-3xl shadow-xl max-w-3xl mx-auto">
+                <div class="text-6xl mb-4">✍️</div>
+                <h1 class="text-3xl md:text-5xl font-black mb-3">เข้าสู่โซน Challenge!</h1>
+                <h2 class="text-xl md:text-2xl font-bold text-blue-200 mb-4">ฝึกออกแบบ & เขียนรหัสเทียมลงกระดาษจริง</h2>
+                <p class="text-sm md:text-base text-blue-100 max-w-xl mx-auto mb-8">
+                    เตรียม <b>กระดาษเปล่า 1 แผ่น และ ปากกา</b> ให้พร้อม!<br>
+                    เรามีภารกิจทั้งหมด 9 ข้อ ครอบคลุมทั้ง ลำดับ, เงื่อนไข และ วนซ้ำ<br>
+                    ในแต่ละข้อจะมี <b>"คำใบ้ IPO"</b>, <b>"เฉลยรหัสเทียมทีละบรรทัด"</b> และ <b>"เครื่องทดสอบรันผลลัพธ์จริง"</b>
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <button onclick="nextSlide()" class="w-full sm:w-auto px-8 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-900 rounded-full font-black shadow-lg text-base transition transform hover:scale-105">
+                        ลุยภารกิจที่ 1 กันเลย 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 9: ภารกิจ 1 - หาพื้นที่สี่เหลี่ยมผืนผ้า (ลำดับ) -->
+        <!-- ============================================== -->
+        <div id="slide-9" class="slide w-full">
+            <!-- Header Task -->
+            <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div>
+                    <span class="text-xs font-bold px-2.5 py-0.5 bg-blue-100 text-blue-700 rounded-full">ภารกิจที่ 1 / 9</span>
+                    <h3 class="text-xl font-black mt-1">คำนวณพื้นที่สี่เหลี่ยมผืนผ้า (โครงสร้างแบบลำดับ)</h3>
+                </div>
+                <span class="text-2xl">📐</span>
+            </div>
+
+            <!-- Problem Card -->
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
+                <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
+                    <b>โจทย์:</b> จงเขียนอัลกอริทึมและรหัสเทียม (Pseudocode) รับค่า <b>ความกว้าง</b> และ <b>ความยาว</b> ของสี่เหลี่ยมผืนผ้า จากนั้นคำนวณหา <b>พื้นที่</b> แล้วแสดงผลลัพธ์ออกทางจอภาพ
+                </p>
+                <div class="mt-2 p-2 bg-amber-50 dark:bg-amber-950/40 rounded-xl border border-amber-200 text-xs text-amber-800 dark:text-amber-300 flex items-center space-x-2">
+                    <span>✍️</span>
+                    <span><b>การบ้านของน้อง:</b> หยิบปากกาเขียนคำสั่งตั้งแต่ BEGIN จนถึง END ลงในกระดาษเลย!</span>
+                </div>
+            </div>
+
+            <!-- Interactive Action Toolbar -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                
+                <!-- Hints & Solution Collapse -->
+                <div class="space-y-2">
+                    <button onclick="toggleBox('hint-1')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
+                        <span>💡 กดดูคำใบ้กรอบวิเคราะห์ (IPO & ตัวแปร)</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="hint-1" class="hidden p-3 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 text-xs space-y-1">
+                        <div><b>Input:</b> width, length (รับจากแป้นพิมพ์)</div>
+                        <div><b>Process:</b> area = width * length</div>
+                        <div><b>Output:</b> area (พื้นที่)</div>
+                        <div><b>ตัวแปร:</b> width, length, area (ใช้ทศนิยม Real/Float)</div>
+                    </div>
+
+                    <button onclick="toggleBox('sol-1')" class="w-full py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-left flex justify-between items-center">
+                        <span>🔍 ดูเฉลยรหัสเทียม (ตรวจการบ้านในกระดาษ)</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="sol-1" class="hidden p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs">
+                        <div class="text-emerald-400 font-bold mb-1">// รหัสเทียมเฉลย:</div>
+                        BEGIN<br>
+                        &nbsp;&nbsp;INPUT width<br>
+                        &nbsp;&nbsp;INPUT length<br>
+                        &nbsp;&nbsp;SET area = width * length<br>
+                        &nbsp;&nbsp;OUTPUT area<br>
+                        END
+                    </div>
+                </div>
+
+                <!-- Live Test Bench -->
+                <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
+                    <h4 class="font-bold text-blue-600 mb-2">🧪 แท่นทดสอบโปรแกรม (Test Bench):</h4>
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <div>
+                            <span class="text-[11px] text-gray-500">width:</span>
+                            <input type="number" id="tb1-w" value="10" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)]">
+                        </div>
+                        <div>
+                            <span class="text-[11px] text-gray-500">length:</span>
+                            <input type="number" id="tb1-l" value="20" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)]">
+                        </div>
+                    </div>
+                    <button onclick="runTest1()" class="w-full py-1.5 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700">
+                        จำลองการรันเพื่อเช็คคำตอบ ▶
+                    </button>
+                    <div id="tb1-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-blue-700">
+                        OUTPUT: 200
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 10: ภารกิจ 2 - ปริมาตรทรงกระบอก (ค่าคงที่ PI) -->
+        <!-- ============================================== -->
+        <div id="slide-10" class="slide w-full">
+            <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div>
+                    <span class="text-xs font-bold px-2.5 py-0.5 bg-purple-100 text-purple-700 rounded-full">ภารกิจที่ 2 / 9</span>
+                    <h3 class="text-xl font-black mt-1">คำนวณปริมาตรทรงกระบอก (ค่าคงที่ PI)</h3>
+                </div>
+                <span class="text-2xl">🥫</span>
+            </div>
+
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
+                <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
+                    <b>โจทย์:</b> รับค่าความสูง (H) และรัศมี (R) ของทรงกระบอก คำนวณหาปริมาตรโดยกำหนดให้ค่า $\pi$ เป็น <b>ค่าคงที่เท่ากับ 3.14</b> (สูตร: $Volume = \pi \times R \times R \times H$)
+                </p>
+                <div class="mt-2 p-2 bg-purple-50 dark:bg-purple-950/40 rounded-xl border border-purple-200 text-xs text-purple-800 dark:text-purple-300 flex items-center space-x-2">
+                    <span>✍️</span>
+                    <span><b>เขียนใส่กระดาษ:</b> อย่าลืมกำหนดค่าคงที่ <code>SET PI = 3.14</code> ก่อนเริ่มคำนวณนะ!</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div class="space-y-2">
+                    <button onclick="toggleBox('hint-2')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
+                        <span>💡 ดูคำใบ้ IPO & ค่าคงที่</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="hint-2" class="hidden p-3 bg-purple-50 dark:bg-purple-950/40 rounded-xl border border-purple-200 text-xs space-y-1">
+                        <div><b>ค่าคงที่:</b> PI = 3.14 (กำหนดไว้ตายตัว)</div>
+                        <div><b>Input:</b> R (รัศมี), H (ความสูง)</div>
+                        <div><b>Process:</b> volume = PI * R * R * H</div>
+                        <div><b>Output:</b> volume (ปริมาตร)</div>
+                    </div>
+
+                    <button onclick="toggleBox('sol-2')" class="w-full py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-left flex justify-between items-center">
+                        <span>🔍 ดูเฉลยรหัสเทียม</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="sol-2" class="hidden p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs">
+                        BEGIN<br>
+                        &nbsp;&nbsp;SET PI = 3.14<br>
+                        &nbsp;&nbsp;INPUT R<br>
+                        &nbsp;&nbsp;INPUT H<br>
+                        &nbsp;&nbsp;SET volume = PI * R * R * H<br>
+                        &nbsp;&nbsp;OUTPUT volume<br>
+                        END
+                    </div>
+                </div>
+
+                <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
+                    <h4 class="font-bold text-purple-600 mb-2">🧪 แท่นทดสอบคำนวณปริมาตร:</h4>
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <div>
+                            <span class="text-[11px] text-gray-500">รัศมี R:</span>
+                            <input type="number" id="tb2-r" value="7" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)]">
+                        </div>
+                        <div>
+                            <span class="text-[11px] text-gray-500">ความสูง H:</span>
+                            <input type="number" id="tb2-h" value="10" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)]">
+                        </div>
+                    </div>
+                    <button onclick="runTest2()" class="w-full py-1.5 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700">
+                        คำนวณปริมาตร ▶
+                    </button>
+                    <div id="tb2-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-purple-700">
+                        OUTPUT: 1538.6
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 11: ภารกิจ 3 - คำนวณดัชนีมวลกาย BMI -->
+        <!-- ============================================== -->
+        <div id="slide-11" class="slide w-full">
+            <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div>
+                    <span class="text-xs font-bold px-2.5 py-0.5 bg-teal-100 text-teal-700 rounded-full">ภารกิจที่ 3 / 9</span>
+                    <h3 class="text-xl font-black mt-1">คำนวณค่าดัชนีมวลกาย (BMI)</h3>
+                </div>
+                <span class="text-2xl">⚖️</span>
+            </div>
+
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
+                <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
+                    <b>โจทย์:</b> รับค่า <b>น้ำหนัก (weight เป็นกิโลกรัม)</b> และ <b>ส่วนสูง (height เป็นเมตร)</b> คำนวณหาค่า BMI ตามสูตร: $BMI = weight / (height \times height)$ แล้วแสดงผล
+                </p>
+                <div class="mt-2 p-2 bg-teal-50 dark:bg-teal-950/40 rounded-xl border border-teal-200 text-xs text-teal-800 dark:text-teal-300 flex items-center space-x-2">
+                    <span>✍️</span>
+                    <span><b>เขียนใส่กระดาษ:</b> ระวังเรื่องวงเล็บตอนเขียนสูตรหารด้วยส่วนสูงกำลังสองนะ!</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div class="space-y-2">
+                    <button onclick="toggleBox('hint-3')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
+                        <span>💡 ดูคำใบ้ IPO</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="hint-3" class="hidden p-3 bg-teal-50 dark:bg-teal-950/40 rounded-xl border border-teal-200 text-xs space-y-1">
+                        <div><b>Input:</b> weight, height</div>
+                        <div><b>Process:</b> bmi = weight / (height * height)</div>
+                        <div><b>Output:</b> bmi</div>
+                    </div>
+
+                    <button onclick="toggleBox('sol-3')" class="w-full py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-left flex justify-between items-center">
+                        <span>🔍 ดูเฉลยรหัสเทียม</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="sol-3" class="hidden p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs">
+                        BEGIN<br>
+                        &nbsp;&nbsp;INPUT weight<br>
+                        &nbsp;&nbsp;INPUT height<br>
+                        &nbsp;&nbsp;SET bmi = weight / (height * height)<br>
+                        &nbsp;&nbsp;OUTPUT bmi<br>
+                        END
+                    </div>
+                </div>
+
+                <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
+                    <h4 class="font-bold text-teal-600 mb-2">🧪 แท่นทดสอบคำนวณ BMI:</h4>
+                    <div class="grid grid-cols-2 gap-2 mb-2">
+                        <div>
+                            <span class="text-[11px] text-gray-500">น้ำหนัก (kg):</span>
+                            <input type="number" id="tb3-w" value="65" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)]">
+                        </div>
+                        <div>
+                            <span class="text-[11px] text-gray-500">ส่วนสูง (เมตร เช่น 1.70):</span>
+                            <input type="number" step="0.01" id="tb3-h" value="1.70" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)]">
+                        </div>
+                    </div>
+                    <button onclick="runTest3()" class="w-full py-1.5 bg-teal-600 text-white font-bold rounded-lg hover:bg-teal-700">
+                        คำนวณ BMI ▶
+                    </button>
+                    <div id="tb3-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-teal-700">
+                        OUTPUT: 22.49
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 12: ภารกิจ 4 - ส่วนลด 1 เงื่อนไข (IF..THEN) -->
+        <!-- ============================================== -->
+        <div id="slide-12" class="slide w-full">
+            <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div>
+                    <span class="text-xs font-bold px-2.5 py-0.5 bg-amber-100 text-amber-700 rounded-full">ภารกิจที่ 4 / 9</span>
+                    <h3 class="text-xl font-black mt-1">ส่วนลด 1 เงื่อนไข (IF..THEN ทางเลือกเดียว)</h3>
+                </div>
+                <span class="text-2xl">🏷️</span>
+            </div>
+
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
+                <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
+                    <b>โจทย์:</b> ร้านค้าลดราคา 10% เมื่อยอดซื้อ <b>ตั้งแต่ 1,000 บาทขึ้นไป</b> หากไม่ถึงเกณฑ์ให้ชำระตามยอดเดิม จงเขียนรหัสเทียมคำนวณยอดเงินที่ต้องชำระ (payment)
+                </p>
+                <div class="mt-2 p-2 bg-amber-50 dark:bg-amber-950/40 rounded-xl border border-amber-200 text-xs text-amber-800 dark:text-amber-300 flex items-center space-x-2">
+                    <span>✍️</span>
+                    <span><b>ทริคเด็ดในกระดาษ:</b> กำหนด <code>SET payment = total</code> ไว้ก่อน ถ้าเข้าเกณฑ์ค่อยลด!</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div class="space-y-2">
+                    <button onclick="toggleBox('hint-4')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
+                        <span>💡 ดูคำใบ้โครงสร้าง IF..THEN</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="hint-4" class="hidden p-3 bg-amber-50 dark:bg-amber-950/40 rounded-xl border border-amber-200 text-xs space-y-1">
+                        <div><b>Input:</b> total (ยอดซื้อ)</div>
+                        <div><b>เตรียมยอด:</b> payment = total</div>
+                        <div><b>เงื่อนไข:</b> IF total &gt;= 1000 THEN payment = total - (total * 0.10)</div>
+                        <div><b>Output:</b> payment (ยอดชำระ)</div>
+                    </div>
+
+                    <button onclick="toggleBox('sol-4')" class="w-full py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-left flex justify-between items-center">
+                        <span>🔍 ดูเฉลยรหัสเทียม</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="sol-4" class="hidden p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs">
+                        BEGIN<br>
+                        &nbsp;&nbsp;INPUT total<br>
+                        &nbsp;&nbsp;SET payment = total<br>
+                        &nbsp;&nbsp;IF total >= 1000 THEN<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SET payment = total - (total * 0.10)<br>
+                        &nbsp;&nbsp;END IF<br>
+                        &nbsp;&nbsp;OUTPUT payment<br>
+                        END
+                    </div>
+                </div>
+
+                <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
+                    <h4 class="font-bold text-amber-600 mb-2">🧪 ทดสอบเงื่อนไขยอดซื้อ:</h4>
+                    <div class="mb-2">
+                        <span class="text-[11px] text-gray-500">กรอกยอดซื้อ total:</span>
+                        <input type="number" id="tb4-total" value="1200" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)]">
+                    </div>
+                    <button onclick="runTest4()" class="w-full py-1.5 bg-amber-600 text-white font-bold rounded-lg hover:bg-amber-700">
+                        คำนวณยอดชำระ ▶
+                    </button>
+                    <div id="tb4-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-amber-700">
+                        OUTPUT payment: 1080 (ลด 10%)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 13: ภารกิจ 5 - ส่วนลด 2 ทางเลือก (IF..ELSE) -->
+        <!-- ============================================== -->
+        <div id="slide-13" class="slide w-full">
+            <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div>
+                    <span class="text-xs font-bold px-2.5 py-0.5 bg-orange-100 text-orange-700 rounded-full">ภารกิจที่ 5 / 9</span>
+                    <h3 class="text-xl font-black mt-1">ส่วนลด 2 ทางเลือก (IF..THEN..ELSE)</h3>
+                </div>
+                <span class="text-2xl">🛍️</span>
+            </div>
+
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
+                <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
+                    <b>โจทย์:</b> ถ้ายอดซื้อ <b>ตั้งแต่ 1,000 บาทขึ้นไป ลด 10%</b> แต่ถ้า <b>น้อยกว่า 1,000 บาท ลด 5%</b> จงคำนวณส่วนลด (discount) และยอดชำระสุทธิ (payment)
+                </p>
+                <div class="mt-2 p-2 bg-orange-50 dark:bg-orange-950/40 rounded-xl border border-orange-200 text-xs text-orange-800 dark:text-orange-300 flex items-center space-x-2">
+                    <span>✍️</span>
+                    <span><b>เขียนใส่กระดาษ:</b> ใช้ IF สำหรับเงื่อนไขแรก และ ELSE สำหรับกรณีที่เหลือ!</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div class="space-y-2">
+                    <button onclick="toggleBox('hint-5')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
+                        <span>💡 ดูคำใบ้โครงสร้าง IF..ELSE</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="hint-5" class="hidden p-3 bg-orange-50 dark:bg-orange-950/40 rounded-xl border border-orange-200 text-xs space-y-1">
+                        <div><b>Input:</b> total</div>
+                        <div><b>Condition:</b> IF total &gt;= 1000 THEN discount = total * 0.10 ELSE discount = total * 0.05</div>
+                        <div><b>Process รวม:</b> payment = total - discount</div>
+                        <div><b>Output:</b> discount, payment</div>
+                    </div>
+
+                    <button onclick="toggleBox('sol-5')" class="w-full py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-left flex justify-between items-center">
+                        <span>🔍 ดูเฉลยรหัสเทียม</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="sol-5" class="hidden p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs">
+                        BEGIN<br>
+                        &nbsp;&nbsp;INPUT total<br>
+                        &nbsp;&nbsp;IF total >= 1000 THEN<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SET discount = total * 0.10<br>
+                        &nbsp;&nbsp;ELSE<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SET discount = total * 0.05<br>
+                        &nbsp;&nbsp;END IF<br>
+                        &nbsp;&nbsp;SET payment = total - discount<br>
+                        &nbsp;&nbsp;OUTPUT discount<br>
+                        &nbsp;&nbsp;OUTPUT payment<br>
+                        END
+                    </div>
+                </div>
+
+                <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
+                    <h4 class="font-bold text-orange-600 mb-2">🧪 ทดสอบระบบ 2 ทางเลือก:</h4>
+                    <div class="mb-2">
+                        <span class="text-[11px] text-gray-500">กรอกยอดซื้อ total:</span>
+                        <input type="number" id="tb5-total" value="800" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)]">
+                    </div>
+                    <button onclick="runTest5()" class="w-full py-1.5 bg-orange-600 text-white font-bold rounded-lg hover:bg-orange-700">
+                        คำนวณส่วนลด & ยอดชำระ ▶
+                    </button>
+                    <div id="tb5-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-orange-700">
+                        ลด: 40 บาท | จ่ายจริง: 760 บาท
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 14: ภารกิจ 6 - ส่วนลดขั้นบันได (IF..ELSE IF) -->
+        <!-- ============================================== -->
+        <div id="slide-14" class="slide w-full">
+            <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div>
+                    <span class="text-xs font-bold px-2.5 py-0.5 bg-red-100 text-red-700 rounded-full">ภารกิจที่ 6 / 9</span>
+                    <h3 class="text-xl font-black mt-1">ส่วนลดขั้นบันได (IF..ELSE IF..ELSE หลายเงื่อนไข)</h3>
+                </div>
+                <span class="text-2xl">🪜</span>
+            </div>
+
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
+                <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
+                    <b>โจทย์:</b> คำนวณส่วนลดตามขั้นบันได:<br>
+                    • ตั้งแต่ 3,000 บาทขึ้นไป ลด <b>20%</b><br>
+                    • ตั้งแต่ 2,000 แต่ไม่ถึง 3,000 ลด <b>15%</b><br>
+                    • ตั้งแต่ 1,000 แต่ไม่ถึง 2,000 ลด <b>10%</b><br>
+                    • ต่ำกว่า 1,000 บาท ลด <b>5%</b>
+                </p>
+                <div class="mt-2 p-2 bg-red-50 dark:bg-red-950/40 rounded-xl border border-red-200 text-xs text-red-800 dark:text-red-300 flex items-center space-x-2">
+                    <span>✍️</span>
+                    <span><b>เทคนิคบนกระดาษ:</b> เช็คจาก "ค่ามากไปหาค่าน้อย" จะทำให้เงื่อนไขสั้นและไม่ต้องเขียนช่วงซ้ำซ้อน!</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div class="space-y-2">
+                    <button onclick="toggleBox('hint-6')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
+                        <span>💡 ดูคำใบ้ลำดับการเช็คเงื่อนไข</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="hint-6" class="hidden p-3 bg-red-50 dark:bg-red-950/40 rounded-xl border border-red-200 text-xs space-y-1">
+                        <div>1. IF total &gt;= 3000 (ลด 20%)</div>
+                        <div>2. ELSE IF total &gt;= 2000 (ลด 15%)</div>
+                        <div>3. ELSE IF total &gt;= 1000 (ลด 10%)</div>
+                        <div>4. ELSE (ลด 5%)</div>
+                    </div>
+
+                    <button onclick="toggleBox('sol-6')" class="w-full py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-left flex justify-between items-center">
+                        <span>🔍 ดูเฉลยรหัสเทียม</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="sol-6" class="hidden p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs">
+                        BEGIN<br>
+                        &nbsp;&nbsp;INPUT total<br>
+                        &nbsp;&nbsp;IF total >= 3000 THEN<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SET discount = total * 0.20<br>
+                        &nbsp;&nbsp;ELSE IF total >= 2000 THEN<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SET discount = total * 0.15<br>
+                        &nbsp;&nbsp;ELSE IF total >= 1000 THEN<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SET discount = total * 0.10<br>
+                        &nbsp;&nbsp;ELSE<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SET discount = total * 0.05<br>
+                        &nbsp;&nbsp;END IF<br>
+                        &nbsp;&nbsp;SET payment = total - discount<br>
+                        &nbsp;&nbsp;OUTPUT discount<br>
+                        &nbsp;&nbsp;OUTPUT payment<br>
+                        END
+                    </div>
+                </div>
+
+                <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
+                    <h4 class="font-bold text-red-600 mb-2">🧪 ทดสอบขั้นบันไดส่วนลด:</h4>
+                    <div class="mb-2">
+                        <span class="text-[11px] text-gray-500">กรอกยอดซื้อ total:</span>
+                        <input type="number" id="tb6-total" value="2500" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)]">
+                    </div>
+                    <button onclick="runTest6()" class="w-full py-1.5 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700">
+                        คำนวณขั้นบันได ▶
+                    </button>
+                    <div id="tb6-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-red-700">
+                        ลด: 375 บาท (15%) | จ่าย: 2125 บาท
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 15: ภารกิจ 7 - รับราคาสินค้า 5 ชิ้น (FOR Loop) -->
+        <!-- ============================================== -->
+        <div id="slide-15" class="slide w-full">
+            <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div>
+                    <span class="text-xs font-bold px-2.5 py-0.5 bg-green-100 text-green-700 rounded-full">ภารกิจที่ 7 / 9</span>
+                    <h3 class="text-xl font-black mt-1">รับราคาสินค้า 5 ชิ้น & สะสมยอดรวม (FOR Loop)</h3>
+                </div>
+                <span class="text-2xl">🛒</span>
+            </div>
+
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
+                <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
+                    <b>โจทย์:</b> ต้องการรับราคาสินค้า <b>จำนวน 5 รายการ</b> จากผู้ใช้ แล้วคำนวณแสดงยอดรวมทั้งหมด (total) ออกทางหน้าจอ
+                </p>
+                <div class="mt-2 p-2 bg-green-50 dark:bg-green-950/40 rounded-xl border border-green-200 text-xs text-green-800 dark:text-green-300 flex items-center space-x-2">
+                    <span>✍️</span>
+                    <span><b>ข้อควรระวังสุดๆ บนกระดาษ:</b> ต้องมี <code>SET total = 0</code> อยู่นอกลูปก่อนเริ่มวนซ้ำเสมอ! ห้ามใส่ไว้ในลูปเด็ดขาด!</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div class="space-y-2">
+                    <button onclick="toggleBox('hint-7')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
+                        <span>💡 ดูคำใบ้โครงสร้าง FOR Loop</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="hint-7" class="hidden p-3 bg-green-50 dark:bg-green-950/40 rounded-xl border border-green-200 text-xs space-y-1">
+                        <div><b>ตัวสะสมค่า (Accumulator):</b> SET total = 0 (นอกลูป)</div>
+                        <div><b>ลูป:</b> FOR i = 1 TO 5</div>
+                        <div><b>ในลูป:</b> INPUT price แล้ว total = total + price</div>
+                        <div><b>จบการวน:</b> OUTPUT total (หลังจบลูป)</div>
+                    </div>
+
+                    <button onclick="toggleBox('sol-7')" class="w-full py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-left flex justify-between items-center">
+                        <span>🔍 ดูเฉลยรหัสเทียม</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="sol-7" class="hidden p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs">
+                        BEGIN<br>
+                        &nbsp;&nbsp;SET total = 0<br>
+                        &nbsp;&nbsp;FOR i = 1 TO 5<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;INPUT price<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SET total = total + price<br>
+                        &nbsp;&nbsp;END FOR<br>
+                        &nbsp;&nbsp;OUTPUT total<br>
+                        END
+                    </div>
+                </div>
+
+                <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
+                    <h4 class="font-bold text-green-600 mb-2">🧪 จำลองการใส่ราคาสินค้า 5 ชิ้น:</h4>
+                    <p class="text-[11px] text-gray-500 mb-1">สมมติป้อนราคา 5 ตัว (คั่นด้วยจุลภาค):</p>
+                    <input type="text" id="tb7-prices" value="10, 20, 30, 40, 50" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)] mb-2 font-mono">
+                    <button onclick="runTest7()" class="w-full py-1.5 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700">
+                        จำลองการวนลูป FOR สะสมยอด ▶
+                    </button>
+                    <div id="tb7-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-green-700">
+                        ยอดรวม total = 150 (วนครบ 5 รอบ)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 16: ภารกิจ 8 - ป้อนราคาจนกว่าจะใส่ 0 (WHILE Loop) -->
+        <!-- ============================================== -->
+        <div id="slide-16" class="slide w-full">
+            <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div>
+                    <span class="text-xs font-bold px-2.5 py-0.5 bg-blue-100 text-blue-700 rounded-full">ภารกิจที่ 8 / 9</span>
+                    <h3 class="text-xl font-black mt-1">รับราคาจนกว่าจะป้อน 0 เพื่อจบ (WHILE Loop)</h3>
+                </div>
+                <span class="text-2xl">🛑</span>
+            </div>
+
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
+                <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
+                    <b>โจทย์:</b> รับราคาสินค้าไปเรื่อยๆ แล้วสะสมยอดรวม โดยผู้ใช้จะ <b>ป้อนเลข 0 เมื่อต้องการจบรายการ</b> (ไม่ทราบจำนวนชิ้นแน่นอนล่วงหน้า)
+                </p>
+                <div class="mt-2 p-2 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 text-xs text-blue-800 dark:text-blue-300 flex items-center space-x-2">
+                    <span>✍️</span>
+                    <span><b>จุดสังเกตในกระดาษ:</b> ต้องรับค่า <code>INPUT price</code> ครั้งแรกก่อนเข้า WHILE เพื่อให้มีค่ามาตรวจเงื่อนไขรอบแรก!</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div class="space-y-2">
+                    <button onclick="toggleBox('hint-8')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
+                        <span>💡 ดูคำใบ้โครงสร้าง WHILE</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="hint-8" class="hidden p-3 bg-blue-50 dark:bg-blue-950/40 rounded-xl border border-blue-200 text-xs space-y-1">
+                        <div>1. SET total = 0</div>
+                        <div>2. INPUT price (รับค่าแรก)</div>
+                        <div>3. WHILE price &gt; 0 DO (ตราบใดที่ยังไม่ใส่ 0)</div>
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;total = total + price</div>
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;INPUT price (รับตัวต่อไป)</div>
+                        <div>4. END WHILE ➔ OUTPUT total</div>
+                    </div>
+
+                    <button onclick="toggleBox('sol-8')" class="w-full py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-left flex justify-between items-center">
+                        <span>🔍 ดูเฉลยรหัสเทียม</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="sol-8" class="hidden p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs">
+                        BEGIN<br>
+                        &nbsp;&nbsp;SET total = 0<br>
+                        &nbsp;&nbsp;INPUT price<br>
+                        &nbsp;&nbsp;WHILE price > 0 DO<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;SET total = total + price<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;INPUT price<br>
+                        &nbsp;&nbsp;END WHILE<br>
+                        &nbsp;&nbsp;OUTPUT total<br>
+                        END
+                    </div>
+                </div>
+
+                <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
+                    <h4 class="font-bold text-blue-600 mb-2">🧪 จำลองการป้อนข้อมูลจนเจอ 0:</h4>
+                    <p class="text-[11px] text-gray-500 mb-1">สมมติชุดข้อมูลที่ป้อนเข้ามา:</p>
+                    <input type="text" id="tb8-stream" value="50, 100, 25, 0" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)] mb-2 font-mono">
+                    <button onclick="runTest8()" class="w-full py-1.5 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700">
+                        รันการทำงานลูป WHILE ▶
+                    </button>
+                    <div id="tb8-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-blue-700">
+                        เจอ 0 สั่งหยุดลูปทันที! ผลรวม: 175
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 17: ภารกิจ 9 - ตรวจสอบจำนวนสินค้า (DO..WHILE) -->
+        <!-- ============================================== -->
+        <div id="slide-17" class="slide w-full">
+            <div class="flex items-center justify-between mb-3 border-b pb-2">
+                <div>
+                    <span class="text-xs font-bold px-2.5 py-0.5 bg-violet-100 text-violet-700 rounded-full">ภารกิจที่ 9 / 9</span>
+                    <h3 class="text-xl font-black mt-1">รับค่าซ้ำจนกว่าจะถูกต้อง (DO..WHILE Loop)</h3>
+                </div>
+                <span class="text-2xl">🔁</span>
+            </div>
+
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
+                <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
+                    <b>โจทย์:</b> ให้ผู้ใช้ป้อนจำนวนสินค้า (quantity) ซึ่งต้องมีค่า <b>มากกว่า 0</b> เท่านั้น หากป้อนค่าติดลบหรือ 0 ให้วนรับค่าใหม่ซ้ำจนกว่าจะถูกต้อง จึงจะแสดงผลลัพธ์
+                </p>
+                <div class="mt-2 p-2 bg-violet-50 dark:bg-violet-950/40 rounded-xl border border-violet-200 text-xs text-violet-800 dark:text-violet-300 flex items-center space-x-2">
+                    <span>✍️</span>
+                    <span><b>จุดเด่นบนกระดาษ:</b> ใช้ DO ขึ้นต้นเพื่อรับค่าก่อน 1 รอบ แล้วใส่ <code>WHILE quantity &lt;= 0</code> ท้ายรอบ!</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                <div class="space-y-2">
+                    <button onclick="toggleBox('hint-9')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
+                        <span>💡 ดูคำใบ้เงื่อนไขทำซ้ำ</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="hint-9" class="hidden p-3 bg-violet-50 dark:bg-violet-950/40 rounded-xl border border-violet-200 text-xs space-y-1">
+                        <div><b>เงื่อนไขให้ทำซ้ำต่อ:</b> quantity &lt;= 0 (ตราบใดที่ยังผิด ให้รับใหม่)</div>
+                        <div><b>เมื่อหลุดลูป:</b> แสดงค่า quantity ที่ถูกต้อง</div>
+                    </div>
+
+                    <button onclick="toggleBox('sol-9')" class="w-full py-2 px-3 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 dark:text-emerald-300 text-left flex justify-between items-center">
+                        <span>🔍 ดูเฉลยรหัสเทียม</span>
+                        <span>🔽</span>
+                    </button>
+                    <div id="sol-9" class="hidden p-3 bg-slate-900 text-slate-100 rounded-xl font-mono text-xs">
+                        BEGIN<br>
+                        &nbsp;&nbsp;DO<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;INPUT quantity<br>
+                        &nbsp;&nbsp;WHILE quantity &lt;= 0<br>
+                        &nbsp;&nbsp;OUTPUT quantity<br>
+                        END
+                    </div>
+                </div>
+
+                <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
+                    <h4 class="font-bold text-violet-600 mb-2">🧪 จำลองการวนรับค่าใหม่เมื่อป้อนผิด:</h4>
+                    <p class="text-[11px] text-gray-500 mb-1">สมมติผู้ใช้ป้อนค่าตามลำดับ:</p>
+                    <input type="text" id="tb9-vals" value="-5, 0, 3" class="w-full p-1.5 border rounded bg-[var(--background,#ffffff)] mb-2 font-mono">
+                    <button onclick="runTest9()" class="w-full py-1.5 bg-violet-600 text-white font-bold rounded-lg hover:bg-violet-700">
+                        รันการทำงาน DO..WHILE ▶
+                    </button>
+                    <div id="tb9-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-violet-700">
+                        -5 (ผิด) ➔ 0 (ผิด) ➔ 3 (ผ่าน! แสดงผล 3)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 18: สรุปเช็กลิสต์ก่อนเข้าห้องสอบ -->
+        <!-- ============================================== -->
+        <div id="slide-18" class="slide w-full my-auto text-center">
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-8 rounded-3xl shadow-lg max-w-3xl mx-auto">
+                <div class="text-6xl mb-4">🏆</div>
+                <h2 class="text-3xl font-black mb-2 text-[var(--foreground,#0f172a)]">สรุปเช็กลิสต์ & ขอให้ทุกคนโชคดี!</h2>
+                <p class="text-sm text-[var(--muted-foreground,#64748b)] mb-6">ทบทวน 5 กฎทองนี้ก่อนเดินเข้าห้องสอบ</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left text-xs mb-8">
+                    <div class="p-3 bg-blue-50 dark:bg-blue-950/40 border border-blue-200 rounded-xl">
+                        <b class="text-blue-700 dark:text-blue-300">✅ 1. ข้อกำหนดอัลกอริทึมที่ดี:</b><br>
+                        ต้องมีจุดเริ่มต้น (BEGIN) และจุดสิ้นสุด (END) เสมอ ลำดับชัดเจน ไม่กำกวม ปฏิบัติได้จริง
+                    </div>
+                    <div class="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 rounded-xl">
+                        <b class="text-emerald-700 dark:text-emerald-300">✅ 2. แยก Input กับ Process:</b><br>
+                        ตัวแปรที่รับจากคนใช้คือ Input ส่วนสิ่งที่คำนวณจากสูตรคือ Process (มักอยู่ทางซ้ายของ =)
+                    </div>
+                    <div class="p-3 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 rounded-xl">
+                        <b class="text-purple-700 dark:text-purple-300">✅ 3. ตัวสะสมค่า (Accumulator):</b><br>
+                        ถ้าเขียนลูปสะสมผลรวม ต้องตั้งค่า <code>SET total = 0</code> ไว้นอกลูปก่อนเสมอ
+                    </div>
+                    <div class="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 rounded-xl">
+                        <b class="text-rose-700 dark:text-rose-300">✅ 4. ความต่างของลูป:</b><br>
+                        รู้รอบ ➔ <b>FOR</b> | ไม่รู้รอบ เช็คก่อน ➔ <b>WHILE</b> | ทำก่อนอย่างน้อย 1 รอบ ➔ <b>DO..WHILE</b>
+                    </div>
+                </div>
+
+                <div class="flex justify-center space-x-3">
+                    <button onclick="jumpToSlide(1)" class="px-6 py-2.5 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl font-bold text-xs border">
+                        🔄 เริ่มทบทวนใหม่ตั้งแต่หน้าแรก
+                    </button>
+                    <button onclick="jumpToSlide(9)" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs">
+                        ✍️ กลับไปฝึกทำโจทย์อีกรอบ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Controls & Key hints -->
+    <footer class="bg-[var(--card,#ffffff)] border-t border-[var(--border,#e2e8f0)] px-6 py-3 flex justify-between items-center shrink-0 shadow-[0_-2px_6px_rgba(0,0,0,0.05)] z-30">
+        <button id="prevBtn" onclick="prevSlide()" class="px-4 py-2 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 text-xs font-bold rounded-xl border disabled:opacity-30 disabled:cursor-not-allowed transition flex items-center space-x-1">
+            <span>◀ ก่อนหน้า</span>
+        </button>
+
+        <div class="text-center">
+            <span id="slide-info-text" class="text-xs font-bold text-slate-700 dark:text-slate-300">หน้า 1 / 18</span>
+            <span class="hidden sm:inline text-[10px] text-[var(--muted-foreground,#64748b)] block">(กดแป้นพิมพ์ ⬅️ หรือ ➡️ ได้)</span>
+        </div>
+
+        <button id="nextBtn" onclick="nextSlide()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow disabled:opacity-30 disabled:cursor-not-allowed transition flex items-center space-x-1">
+            <span>ถัดไป ▶</span>
+        </button>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 18;
+
+        function updateUI() {
+            document.querySelectorAll('.slide').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(`slide-${currentSlide}`);
+            if (target) target.classList.add('active');
+
+            document.getElementById('slide-num-badge').innerText = `${currentSlide} / ${totalSlides}`;
+            document.getElementById('slide-info-text').innerText = `หน้า ${currentSlide} / ${totalSlides}`;
+            document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+            document.getElementById('jump-select').value = currentSlide;
+
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+
+            const mainElem = document.querySelector('main');
+            if (mainElem) mainElem.scrollTop = 0;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateUI();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateUI();
+            }
+        }
+
+        function jumpToSlide(num) {
+            if (num >= 1 && num <= totalSlides) {
+                currentSlide = num;
+                updateUI();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (['input', 'textarea'].includes(document.activeElement.tagName.toLowerCase())) return;
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        function toggleBox(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.toggle('hidden');
+        }
+
+        // ==========================================
+        // 1. PLC INTERACTIVE DETAILS
+        // ==========================================
+        const plcData = {
+            1: {
+                title: "กล่องที่ 1: การวิเคราะห์ปัญหา (Problem Analysis)",
+                desc: "เป็นจุดเริ่มต้นของทุกอย่าง ทำความเข้าใจว่า ปัญหาคืออะไร? ผู้ใช้ต้องการอะไร? ข้อมูลเข้า (Input) คืออะไร? และผลลัพธ์ (Output) คืออะไร? นิยมใช้หลักการ IPO หากจุดนี้ผิด งานที่เหลือจะพังหมด!",
+                flow: "➡️ ส่งต่อ: 'ข้อกำหนดของปัญหา' (Problem Specification) ให้ขั้นที่ 2",
+                icon: "🕵️‍♂️"
+            },
+            2: {
+                title: "กล่องที่ 2: การออกแบบโปรแกรม (Program Design)",
+                desc: "วางแผนวิธีแก้ปัญหาก่อนลงมือเขียนโค้ดจริง เครื่องมือที่ใช้ได้แก่ การเขียนอัลกอริทึม (Algorithm), ผังงาน (Flowchart) หรือ รหัสเทียม (Pseudocode) เปรียบเหมือนพิมพ์เขียวสร้างบ้าน",
+                flow: "➡️ ส่งต่อ: 'แบบแผนการทำงาน' ให้ขั้นที่ 3",
+                icon: "✏️"
+            },
+            3: {
+                title: "กล่องที่ 3: การเขียนโปรแกรม (Coding / Implementation)",
+                desc: "นำแบบแผนจากขั้นที่แล้วมาแปลงเป็นภาษาโปรแกรมจริง เช่น Python, C++, Java โดยต้องเขียนให้ถูกต้องตามไวยากรณ์ (Syntax) และมีคอมเมนต์อธิบายโค้ด",
+                flow: "➡️ ส่งต่อ: 'โปรแกรมต้นฉบับ' (Source Code) ไปให้ขั้นที่ 4",
+                icon: "💻"
+            },
+            4: {
+                title: "กล่องที่ 4: การทดสอบโปรแกรม (Program Testing)",
+                desc: "ตรวจสอบว่าโปรแกรมทำงานถูกต้องหรือไม่ โดยตรวจสอบข้อผิดพลาด 3 ชนิด: Syntax Error, Runtime Error, และ Logic Error หากพบข้อผิดพลาด จะมีลูกศรย้อนกลับไปแก้ที่ขั้นที่ 3 หรือ 2 ทันที!",
+                flow: "🔄 Feedback Loop: พบ Bug ➔ ย้อนกลับไปแก้โค้ดหรือออกแบบใหม่",
+                icon: "🐛"
+            },
+            5: {
+                title: "กล่องที่ 5: การจัดทำเอกสาร (Documentation)",
+                desc: "บันทึกรายละเอียดเกี่ยวกับโปรแกรมเป็นลายลักษณ์อักษร แบ่งเป็น 2 ส่วนคือ คู่มือสำหรับผู้พัฒนา (Technical Doc) และ คู่มือสำหรับผู้ใช้งาน (User Manual)",
+                flow: "➡️ ส่งต่อ: 'คู่มือและเอกสารอ้างอิง' ไปช่วยในขั้นบำรุงรักษา",
+                icon: "📚"
+            },
+            6: {
+                title: "กล่องที่ 6: การบำรุงรักษา (Program Maintenance)",
+                desc: "ขั้นตอนหลังนำไปใช้งานจริง แก้ไขข้อผิดพลาดที่หลุดรอด หรือปรับปรุงเพิ่มฟีเจอร์ตามความต้องการใหม่ ในชีวิตจริงขั้นตอนนี้ใช้เวลาและงบประมาณมากที่สุด!",
+                flow: "🔄 Feedback Loop: เมื่อมีความต้องการใหม่ ➔ วนกลับไปเริ่มวิเคราะห์ที่ขั้น 1 เสมอ",
+                icon: "🔧"
+            }
+        };
+
+        function selectPLC(step) {
+            for (let i = 1; i <= 6; i++) {
+                const card = document.getElementById(`plc-card-${i}`);
+                if (i === step) {
+                    card.className = "plc-card cursor-pointer p-4 rounded-2xl border-2 border-blue-500 bg-blue-50 dark:bg-blue-950/40 transition shadow-sm scale-102";
+                } else {
+                    card.className = "plc-card cursor-pointer p-4 rounded-2xl border-2 border-transparent bg-[var(--card,#ffffff)] hover:border-slate-300 transition shadow-sm";
+                }
+            }
+            const data = plcData[step];
+            document.getElementById('plc-icon').innerText = data.icon;
+            document.getElementById('plc-title').innerText = data.title;
+            document.getElementById('plc-desc').innerText = data.desc;
+            document.getElementById('plc-loop-note').innerText = data.flow;
+        }
+
+        // ==========================================
+        // 2. IPO MACHINE SIMULATOR
+        // ==========================================
+        function runIPOMachine() {
+            const w = parseFloat(document.getElementById('ipo-w').value) || 0;
+            const l = parseFloat(document.getElementById('ipo-l').value) || 0;
+            const stepBox = document.getElementById('ipo-calc-step');
+            const resultBox = document.getElementById('ipo-result');
+
+            stepBox.innerText = `กำลังคำนวณ: ${w} × ${l} ...`;
+            resultBox.innerText = "⏳...";
+
+            setTimeout(() => {
+                const area = w * l;
+                stepBox.innerText = `สำเร็จ: ${w} × ${l} = ${area}`;
+                resultBox.innerText = area;
+            }, 300);
+        }
+
+        // ==========================================
+        // 3. VARIABLE BOX PLAYGROUND
+        // ==========================================
+        let currentScore = 50;
+        function updateVar(val) {
+            currentScore = val;
+            const box = document.getElementById('var-box-visual');
+            const valSpan = document.getElementById('var-score-val');
+            valSpan.innerText = val;
+            document.getElementById('var-action-desc').innerText = `รันคำสั่ง: SET score = ${val} (ค่าใหม่ทับค่าเก่าแล้ว)`;
+            box.classList.add('scale-110');
+            setTimeout(() => box.classList.remove('scale-110'), 250);
+        }
+
+        function addVar(delta) {
+            currentScore += delta;
+            const box = document.getElementById('var-box-visual');
+            document.getElementById('var-score-val').innerText = currentScore;
+            document.getElementById('var-action-desc').innerText = `รันคำสั่ง: SET score = score + ${delta} ➔ ได้ ${currentScore}`;
+            box.classList.add('scale-110');
+            setTimeout(() => box.classList.remove('scale-110'), 250);
+        }
+
+        function tryEditConst(newVal) {
+            const box = document.getElementById('const-box-visual');
+            box.classList.add('shake-box');
+            document.getElementById('const-action-desc').innerHTML = `<span class="text-rose-600 font-bold">❌ Error: ค่าคงที่ PI = 3.14 ล็อคห้ามแก้ไข!</span>`;
+            setTimeout(() => box.classList.remove('shake-box'), 400);
+        }
+
+        // ==========================================
+        // 4. FLOWCHART SELECTOR
+        // ==========================================
+        const flowData = {
+            terminal: {
+                title: "⭕ Terminal (จุดเริ่มต้น / จุดสิ้นสุด)",
+                desc: "ใช้บอกจุดเริ่มต้นและสิ้นสุดของโปรแกรมหรือโมดูล ในสไลด์รหัสเทียมจะใช้คู่กับ BEGIN / END หรือ START / STOP",
+                code: "BEGIN / END"
+            },
+            io: {
+                title: "▱ Input / Output (รับข้อมูลและแสดงผล)",
+                desc: "สี่เหลี่ยมด้านขนาน ใช้รับข้อมูลจากผู้ใช้ หรือแสดงผลลัพธ์ออกทางจอภาพโดยไม่ระบุอุปกรณ์เฉพาะเจาะจง",
+                code: "INPUT / OUTPUT, DISPLAY"
+            },
+            proc: {
+                title: "▭ Process (การประมวลผล / กำหนดค่า)",
+                desc: "สี่เหลี่ยมผืนผ้า ใช้สำหรับการคำนวณจากสูตร หรือการกำหนดค่าตัวแปร (Assignment เช่น SET x = 10)",
+                code: "SET, COMPUTE, CALCULATE"
+            },
+            decision: {
+                title: "◇ Decision (การตัดสินใจ / ตรวจสอบเงื่อนไข)",
+                desc: "สี่เหลี่ยมข้าวหลามตัด มีลูกศรเข้า 1 ทาง และลูกศรออกอย่างน้อย 2 ทาง (จริง/เท็จ หรือ ใช่/ไม่ใช่) ใช้กับคำสั่งเงื่อนไข",
+                code: "IF..THEN..ELSE"
+            }
+        };
+
+        function selectFlow(type) {
+            const data = flowData[type];
+            document.getElementById('flow-title').innerText = data.title;
+            document.getElementById('flow-desc').innerText = data.desc;
+            document.getElementById('flow-code').innerText = data.code;
+        }
+
+        // ==========================================
+        // 5. DESK CHECK STEP PLAYER
+        // ==========================================
+        let dcStep = 0;
+        const dcSteps = [
+            { line: 2, n1: "-", n2: "-", n3: "-", total: "0", out: "-", exp: "บรรทัด 2: กำหนดค่าเริ่มต้น SET total = 0" },
+            { line: 3, n1: "10", n2: "20", n3: "30", total: "0", out: "-", exp: "บรรทัด 3: รับค่า num1=10, num2=20, num3=30" },
+            { line: 4, n1: "10", n2: "20", n3: "30", total: "60", out: "-", exp: "บรรทัด 4: คำนวณ total = 10+20+30 ได้ผลรวม 60" },
+            { line: 5, n1: "10", n2: "20", n3: "30", total: "60", out: "60", exp: "บรรทัด 5: แสดงผลลัพธ์ total ทางจอภาพ = 60" },
+            { line: 6, n1: "10", n2: "20", n3: "30", total: "60", out: "60", exp: "บรรทัด 6: จบการทำงาน (END)" }
+        ];
+
+        function stepDeskCheck() {
+            if (dcStep >= dcSteps.length) return;
+            const item = dcSteps[dcStep];
+            
+            // clear highlight code
+            for (let i = 1; i <= 6; i++) {
+                const el = document.getElementById(`dc-code-${i}`);
+                if (el) el.className = (i === item.line) ? "p-1 rounded bg-blue-600 text-white font-bold" : "p-1 rounded text-slate-300";
+            }
+
+            const tbody = document.getElementById('dc-tbody');
+            if (dcStep === 0) tbody.innerHTML = "";
+
+            const row = document.createElement('tr');
+            row.className = "bg-blue-50/50 dark:bg-slate-800 border-b";
+            row.innerHTML = `
+                <td class="p-2 border-r font-bold">${item.line}</td>
+                <td class="p-2 border-r">${item.n1}</td>
+                <td class="p-2 border-r">${item.n2}</td>
+                <td class="p-2 border-r">${item.n3}</td>
+                <td class="p-2 border-r font-bold text-blue-600">${item.total}</td>
+                <td class="p-2 font-bold text-emerald-600">${item.out}</td>
+            `;
+            tbody.appendChild(row);
+            document.getElementById('dc-explain').innerText = item.exp;
+            dcStep++;
+        }
+
+        function resetDeskCheck() {
+            dcStep = 0;
+            for (let i = 1; i <= 6; i++) {
+                const el = document.getElementById(`dc-code-${i}`);
+                if (el) el.className = "p-1 rounded text-slate-300";
+            }
+            document.getElementById('dc-tbody').innerHTML = `
+                <tr id="dc-row-init" class="text-gray-400">
+                    <td colspan="6" class="p-3 text-center">กดปุ่ม "ก้าวต่อไป" ด้านซ้ายเพื่อเริ่มไล่โค้ด</td>
+                </tr>
+            `;
+            document.getElementById('dc-explain').innerText = "👉 กำลังรอเริ่มการทำงาน...";
+        }
+
+        // ==========================================
+        // 6. TEST BENCHES (CHALLENGES 1-9)
+        // ==========================================
+        function runTest1() {
+            const w = parseFloat(document.getElementById('tb1-w').value) || 0;
+            const l = parseFloat(document.getElementById('tb1-l').value) || 0;
+            document.getElementById('tb1-out').innerText = `OUTPUT: ${w * l} ตารางหน่วย`;
+        }
+
+        function runTest2() {
+            const r = parseFloat(document.getElementById('tb2-r').value) || 0;
+            const h = parseFloat(document.getElementById('tb2-h').value) || 0;
+            const vol = 3.14 * r * r * h;
+            document.getElementById('tb2-out').innerText = `OUTPUT: ${vol.toFixed(2)}`;
+        }
+
+        function runTest3() {
+            const w = parseFloat(document.getElementById('tb3-w').value) || 0;
+            const h = parseFloat(document.getElementById('tb3-h').value) || 0;
+            if (h <= 0) {
+                document.getElementById('tb3-out').innerText = `ส่วนสูงต้องมากกว่า 0`;
+                return;
+            }
+            const bmi = w / (h * h);
+            document.getElementById('tb3-out').innerText = `OUTPUT: ${bmi.toFixed(2)}`;
+        }
+
+        function runTest4() {
+            const total = parseFloat(document.getElementById('tb4-total').value) || 0;
+            let payment = total;
+            let note = "ไม่ถึงเกณฑ์ลด";
+            if (total >= 1000) {
+                payment = total - (total * 0.10);
+                note = "ได้ลด 10%";
+            }
+            document.getElementById('tb4-out').innerText = `จ่ายจริง: ${payment.toFixed(2)} บาท (${note})`;
+        }
+
+        function runTest5() {
+            const total = parseFloat(document.getElementById('tb5-total').value) || 0;
+            let disc = 0;
+            if (total >= 1000) disc = total * 0.10;
+            else disc = total * 0.05;
+            const pay = total - disc;
+            document.getElementById('tb5-out').innerText = `ลด: ${disc.toFixed(2)} บ. | จ่าย: ${pay.toFixed(2)} บ.`;
+        }
+
+        function runTest6() {
+            const total = parseFloat(document.getElementById('tb6-total').value) || 0;
+            let rate = 0.05;
+            if (total >= 3000) rate = 0.20;
+            else if (total >= 2000) rate = 0.15;
+            else if (total >= 1000) rate = 0.10;
+            const disc = total * rate;
+            const pay = total - disc;
+            document.getElementById('tb6-out').innerText = `ลด ${rate * 100}% (${disc.toFixed(2)} บ.) | จ่าย: ${pay.toFixed(2)} บ.`;
+        }
+
+        function runTest7() {
+            const str = document.getElementById('tb7-prices').value;
+            const arr = str.split(',').map(s => parseFloat(s.trim()) || 0);
+            let total = 0;
+            for (let i = 0; i < Math.min(5, arr.length); i++) {
+                total += arr[i];
+            }
+            document.getElementById('tb7-out').innerText = `ยอดรวม total = ${total} (วนบวก ${Math.min(5, arr.length)} ชิ้น)`;
+        }
+
+        function runTest8() {
+            const str = document.getElementById('tb8-stream').value;
+            const arr = str.split(',').map(s => parseFloat(s.trim()) || 0);
+            let total = 0;
+            let rounds = 0;
+            for (let val of arr) {
+                if (val <= 0) break;
+                total += val;
+                rounds++;
+            }
+            document.getElementById('tb8-out').innerText = `เจอ 0 สั่งจบลูป! บวกไป ${rounds} ชิ้น | ผลรวม: ${total}`;
+        }
+
+        function runTest9() {
+            const str = document.getElementById('tb9-vals').value;
+            const arr = str.split(',').map(s => parseFloat(s.trim()) || 0);
+            let valid = null;
+            let log = [];
+            for (let val of arr) {
+                if (val <= 0) {
+                    log.push(`${val} (ผิด ➔ วนใหม่)`);
+                } else {
+                    log.push(`${val} (ผ่าน!)`);
+                    valid = val;
+                    break;
+                }
+            }
+            document.getElementById('tb9-out').innerText = log.join(" ➔ ") + (valid ? ` | แสดงผล: ${valid}` : " | ยังไม่พบค่าที่ถูก");
+        }
+
+        // Initialize UI
+        updateUI();
+    </script>
+</body>
+</html>
