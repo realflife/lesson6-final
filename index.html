@@ -29,7 +29,7 @@
 <body class="bg-[var(--background,#f8fafc)] text-[var(--foreground,#0f172a)] h-screen w-screen overflow-hidden antialiased flex flex-col font-sans select-none">
 
     <!-- Top Navigation & Progress Bar -->
-    <header class="bg-[var(--card,#ffffff)] border-b border-[var(--border,#e2e8f0)] px-6 py-3 flex justify-between items-center shrink-0 shadow-sm z-30">
+    <header class="bg-[var(--card,#ffffff)] border-b border-[var(--border,#e2e8f0)] px-6 py-2.5 flex justify-between items-center shrink-0 shadow-sm z-30">
         <div class="flex items-center space-x-3">
             <span class="text-2xl">🎓</span>
             <div>
@@ -40,31 +40,32 @@
 
         <div class="flex items-center space-x-3">
             <!-- Jump to Section dropdown -->
-            <select id="jump-select" onchange="jumpToSlide(parseInt(this.value))" class="text-xs bg-[var(--background,#f1f5f9)] border border-[var(--border,#cbd5e1)] rounded-lg px-2 py-1.5 focus:outline-none cursor-pointer">
-                <optgroup label="📖 ส่วนสรุปทฤษฎี & จำลอง">
+            <select id="jump-select" onchange="jumpToSlide(parseInt(this.value))" class="text-xs bg-[var(--background,#f1f5f9)] border border-[var(--border,#cbd5e1)] rounded-lg px-2.5 py-1.5 focus:outline-none cursor-pointer font-medium">
+                <optgroup label="📖 ส่วนสรุปทฤษฎี & คำสั่ง">
                     <option value="1">1. ปก & สารบัญ</option>
                     <option value="2">2. วงจรพัฒนาโปรแกรม (PLC)</option>
                     <option value="3">3. เครื่องจักร IPO (Interactive)</option>
                     <option value="4">4. กล่องตัวแปร vs ค่าคงที่</option>
-                    <option value="5">5. สัญลักษณ์ผังงาน (Flowchart)</option>
-                    <option value="6">6. โครงสร้างการทำงาน 3 แบบ</option>
-                    <option value="7">7. เครื่องจำลอง Desk Check</option>
+                    <option value="5">5. ตารางคำสั่งรหัสเทียมครบชุด (Pseudocode)</option>
+                    <option value="6">6. สัญลักษณ์ผังงาน (Flowchart)</option>
+                    <option value="7">7. โครงสร้างการทำงาน 3 แบบ & Loop</option>
+                    <option value="8">8. เครื่องจำลอง Desk Check</option>
                 </optgroup>
                 <optgroup label="✍️ โซนฝึกเขียนรหัสเทียมลงกระดาษ">
-                    <option value="8">8. แนะนำ Coding Challenge</option>
-                    <option value="9">ภารกิจ 1: หาพื้นที่สี่เหลี่ยมผืนผ้า (ลำดับ)</option>
-                    <option value="10">ภารกิจ 2: ปริมาตรทรงกระบอก (ค่าคงที่ PI)</option>
-                    <option value="11">ภารกิจ 3: คำนวณค่าดัชนีมวลกาย BMI</option>
-                    <option value="12">ภารกิจ 4: ส่วนลด 1 เงื่อนไข (IF..THEN)</option>
-                    <option value="13">ภารกิจ 5: ส่วนลด 2 ทางเลือก (IF..ELSE)</option>
-                    <option value="14">ภารกิจ 6: ส่วนลดหลายระดับ (ขั้นบันได)</option>
-                    <option value="15">ภารกิจ 7: ผลรวมสินค้า 5 ชิ้น (FOR Loop)</option>
-                    <option value="16">ภารกิจ 8: ป้อนราคาจนกว่าจะใส่ 0 (WHILE)</option>
-                    <option value="17">ภารกิจ 9: ตรวจสอบจำนวนสินค้า (DO..WHILE)</option>
-                    <option value="18">18. สรุปเช็กลิสต์ก่อนเข้าห้องสอบ</option>
+                    <option value="9">9. แนะนำ Coding Challenge</option>
+                    <option value="10">ภารกิจ 1: หาพื้นที่สี่เหลี่ยมผืนผ้า (ลำดับ)</option>
+                    <option value="11">ภารกิจ 2: ปริมาตรทรงกระบอก (ค่าคงที่ PI)</option>
+                    <option value="12">ภารกิจ 3: คำนวณค่าดัชนีมวลกาย BMI</option>
+                    <option value="13">ภารกิจ 4: ส่วนลด 1 เงื่อนไข (IF..THEN)</option>
+                    <option value="14">ภารกิจ 5: ส่วนลด 2 ทางเลือก (IF..ELSE)</option>
+                    <option value="15">ภารกิจ 6: ส่วนลดหลายระดับ (ขั้นบันได)</option>
+                    <option value="16">ภารกิจ 7: ผลรวมสินค้า 5 ชิ้น (FOR Loop)</option>
+                    <option value="17">ภารกิจ 8: ป้อนราคาจนกว่าจะใส่ 0 (WHILE)</option>
+                    <option value="18">ภารกิจ 9: ตรวจสอบจำนวนสินค้า (DO..WHILE)</option>
+                    <option value="19">19. สรุปเช็กลิสต์ก่อนเข้าห้องสอบ</option>
                 </optgroup>
             </select>
-            <span id="slide-num-badge" class="px-2.5 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200 text-xs font-bold rounded-full">1 / 18</span>
+            <span id="slide-num-badge" class="px-2.5 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200 text-xs font-bold rounded-full">1 / 19</span>
         </div>
     </header>
 
@@ -87,20 +88,22 @@
                 <h1 class="text-3xl md:text-5xl font-black text-[var(--foreground,#0f172a)] mb-3 tracking-tight">สรุปติวสอบ & ตะลุยโจทย์</h1>
                 <h2 class="text-xl md:text-2xl font-bold text-blue-600 mb-4">การวิเคราะห์ปัญหา & ออกแบบอัลกอริทึม</h2>
                 <p class="text-sm md:text-base text-[var(--muted-foreground,#64748b)] max-w-xl mx-auto mb-8">
-                    เน้นภาพรวม ทฤษฎีที่ออกสอบบ่อย พร้อมของเล่น Interactive และ <b>"โซนฝึกเขียนรหัสเทียมลงกระดาษจริง"</b> เพื่อให้น้องๆ ปี 1 พร้อมทำข้อสอบอัตนัยและปรนัยแบบมั่นใจเต็ม 100!
+                    เน้นภาพรวม ทฤษฎีที่ออกสอบบ่อย พร้อมตารางคำสั่งรหัสเทียมครบชุด และ <b>"โซนฝึกเขียนรหัสเทียมลงกระดาษจริง"</b> เพื่อให้น้องๆ ปี 1 พร้อมทำข้อสอบอัตนัยและปรนัยแบบมั่นใจเต็ม 100!
                 </p>
 
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-lg mx-auto mb-8 text-xs font-semibold text-[var(--foreground,#0f172a)]">
-                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">🎯 PLC 6 ขั้นตอน</div>
-                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📥 IPO Model</div>
-                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📦 กล่องตัวแปร</div>
-                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📊 ผังงาน Flowchart</div>
-                    <div class="p-3 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">🔁 เจาะลึก 3 Loop</div>
-                    <div class="p-3 bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 rounded-xl border border-amber-300">✍️ 9 โจทย์เขียนกระดาษ</div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 max-w-xl mx-auto mb-8 text-xs font-semibold text-[var(--foreground,#0f172a)]">
+                    <div class="p-2.5 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">🎯 PLC 6 ขั้นตอน</div>
+                    <div class="p-2.5 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📥 IPO Model</div>
+                    <div class="p-2.5 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📦 กล่องตัวแปร</div>
+                    <div class="p-2.5 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-xl border border-blue-300 font-bold">📋 ตารางรหัสเทียมครบชุด</div>
+                    <div class="p-2.5 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📊 ผังงาน Flowchart</div>
+                    <div class="p-2.5 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">🔁 เจาะลึก 3 Loop</div>
+                    <div class="p-2.5 bg-[var(--background,#f1f5f9)] rounded-xl border border-[var(--border,#cbd5e1)]">📝 Desk Check</div>
+                    <div class="p-2.5 bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-200 rounded-xl border border-amber-300 font-bold">✍️ 9 โจทย์เขียนกระดาษ</div>
                 </div>
 
                 <button onclick="nextSlide()" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-bold shadow-md hover:shadow-lg transition transform hover:-translate-y-0.5 text-base">
-                    เริ่มตะลุยบทเรียน ▶
+                    เริ่มเรียนเนื้อหากันเลย ▶
                 </button>
             </div>
         </div>
@@ -333,12 +336,287 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 5: สัญลักษณ์ผังงาน (Flowchart) -->
+        <!-- SLIDE 5: [NEW] ตารางคำสั่งรหัสเทียมมาตรฐานครบชุด -->
         <!-- ============================================== -->
         <div id="slide-5" class="slide w-full">
             <div class="text-center mb-3">
+                <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">เปิดดูทวนก่อนสอบ & ตารางอ้างอิง</span>
+                <h2 class="text-2xl md:text-3xl font-black mt-1">4. ตารางคำสั่งรหัสเทียม (Pseudocode Reference)</h2>
+                <p class="text-xs text-[var(--muted-foreground,#64748b)]">รวมคำสั่งรหัสเทียมทั้งหมดในเอกสาร (หน้า 44-46) พร้อมหน้าที่และการใช้งานจริง</p>
+            </div>
+
+            <!-- Filter Pills & Search Bar -->
+            <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm mb-3 flex flex-col md:flex-row items-center justify-between gap-2.5">
+                <!-- Filter Pills -->
+                <div class="flex flex-wrap gap-1 text-xs">
+                    <button onclick="filterPseudo('all', this)" class="pseudo-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold border border-blue-600">🌟 ทั้งหมด</button>
+                    <button onclick="filterPseudo('io', this)" class="pseudo-btn px-2.5 py-1 rounded-lg bg-[var(--background,#f1f5f9)] hover:bg-slate-200 text-slate-700 font-medium border">📥 รับ & แสดงผล</button>
+                    <button onclick="filterPseudo('assign', this)" class="pseudo-btn px-2.5 py-1 rounded-lg bg-[var(--background,#f1f5f9)] hover:bg-slate-200 text-slate-700 font-medium border">⚙️ กำหนดค่า & คำนวณ</button>
+                    <button onclick="filterPseudo('control', this)" class="pseudo-btn px-2.5 py-1 rounded-lg bg-[var(--background,#f1f5f9)] hover:bg-slate-200 text-slate-700 font-medium border">🔀 เงื่อนไข & ลูป</button>
+                    <button onclick="filterPseudo('start', this)" class="pseudo-btn px-2.5 py-1 rounded-lg bg-[var(--background,#f1f5f9)] hover:bg-slate-200 text-slate-700 font-medium border">🏁 เริ่มต้น/จบ & หมายเหตุ</button>
+                </div>
+
+                <!-- Search Input -->
+                <div class="w-full md:w-56 relative">
+                    <input type="text" id="pseudo-search" oninput="searchPseudoTable()" placeholder="🔍 ค้นหาคำสั่ง..." class="w-full px-3 py-1 text-xs border rounded-lg bg-[var(--background,#ffffff)] focus:outline-none focus:ring-1 focus:ring-blue-500">
+                </div>
+            </div>
+
+            <!-- Table Wrapper -->
+            <div class="overflow-y-auto max-h-[380px] border border-[var(--border,#e2e8f0)] rounded-2xl shadow-sm bg-[var(--card,#ffffff)]">
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead class="bg-[var(--background,#f1f5f9)] sticky top-0 border-b z-10 font-bold">
+                        <tr>
+                            <th class="p-3 w-3/12 border-r">คำสั่งรหัสเทียม</th>
+                            <th class="p-3 w-5/12 border-r">หน้าที่ / การใช้งาน</th>
+                            <th class="p-3 w-4/12">ตัวอย่างการเขียน</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pseudo-tbody" class="divide-y divide-gray-100 font-sans">
+                        
+                        <!-- 1. BEGIN / END -->
+                        <tr class="pseudo-row" data-cat="start">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">BEGIN</span>
+                                <span class="font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200 ml-1">END</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>จุดเริ่มต้น และ จุดสิ้นสุด</b> ของโปรแกรม หรือบล็อกการทำงานย่อย
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                BEGIN<br>&nbsp;&nbsp;...<br>END
+                            </td>
+                        </tr>
+
+                        <!-- 2. START / STOP -->
+                        <tr class="pseudo-row" data-cat="start">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">START</span>
+                                <span class="font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded border border-rose-200 ml-1">STOP</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                จุดเริ่มต้น และ จุดสิ้นสุด (ความหมายเหมือน BEGIN/END)
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                START<br>&nbsp;&nbsp;...<br>STOP
+                            </td>
+                        </tr>
+
+                        <!-- 3. REM -->
+                        <tr class="pseudo-row" data-cat="start">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-gray-700 bg-gray-100 px-2 py-0.5 rounded border">REM</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>การเขียนหมายเหตุ (Remark / Comment)</b> สำหรับอธิบายโปรแกรม คอมพิวเตอร์จะไม่นำไปประมวลผล
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                REM จงเขียนโปรแกรมคำนวณเกรด...
+                            </td>
+                        </tr>
+
+                        <!-- 4. INITIAL, INIT, ASSIGNMENT, SET -->
+                        <tr class="pseudo-row" data-cat="assign">
+                            <td class="p-3 border-r font-mono">
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="font-bold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-200">SET</span>
+                                    <span class="font-bold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-200">INITIAL</span>
+                                    <span class="font-bold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-200">INIT</span>
+                                    <span class="font-bold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-200">ASSIGNMENT</span>
+                                </div>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>ใช้กำหนดค่าเริ่มต้น หรือ กำหนดค่า (Assignment)</b> ให้กับตัวแปร โดยนำค่าทางขวามือของเครื่องหมาย = ไปเก็บไว้ในตัวแปรทางซ้ายมือ
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                INITIAL COUNT = 0<br>
+                                SET N = 5<br>
+                                SET area = width * length
+                            </td>
+                        </tr>
+
+                        <!-- 5. GET, INPUT, ACCEPT, READ -->
+                        <tr class="pseudo-row" data-cat="io">
+                            <td class="p-3 border-r font-mono">
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">INPUT</span>
+                                    <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">GET</span>
+                                    <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">READ</span>
+                                    <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">ACCEPT</span>
+                                </div>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>รับค่าข้อมูลจากผู้ใช้</b> (ผ่านทางแป้นพิมพ์) แล้วนำค่าไปเก็บไว้ในตัวแปรที่ระบุ
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                GET A, B<br>
+                                INPUT N<br>
+                                READ NUM[][]
+                            </td>
+                        </tr>
+
+                        <!-- 6. COMPUTE, CALCULATE -->
+                        <tr class="pseudo-row" data-cat="assign">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">COMPUTE</span>
+                                <span class="font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 ml-1">CALCULATE</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>ประมวลผล หรือ การคำนวณ</b> ค่าตัวเลขจากสมการ
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                COMPUTE SUM = A + B<br>
+                                CALCULATE ANS = A * B
+                            </td>
+                        </tr>
+
+                        <!-- 7. INC, INCREMENT -->
+                        <tr class="pseudo-row" data-cat="assign">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200">INC</span>
+                                <span class="font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200 ml-1">INCREMENT</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>การเพิ่มค่าในตัวแปรทีละ 1</b> (ความหมายเดียวกับ <code>I++</code> หรือ <code>I = I + 1</code>)
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                INC I<br>
+                                <span class="text-gray-400">// ค่า I เพิ่มขึ้น 1</span>
+                            </td>
+                        </tr>
+
+                        <!-- 8. DEC, DECREMENT -->
+                        <tr class="pseudo-row" data-cat="assign">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200">DEC</span>
+                                <span class="font-bold text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded border border-rose-200 ml-1">DECREMENT</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>การลดค่าในตัวแปรทีละ 1</b> (ความหมายเดียวกับ <code>X--</code> หรือ <code>X = X - 1</code>)
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                DEC x<br>
+                                <span class="text-gray-400">// ค่า x ลดลง 1</span>
+                            </td>
+                        </tr>
+
+                        <!-- 9. DISPLAY, SHOW, PRINT, PROMPT, WRITE, OUTPUT -->
+                        <tr class="pseudo-row" data-cat="io">
+                            <td class="p-3 border-r font-mono">
+                                <div class="flex flex-wrap gap-1">
+                                    <span class="font-bold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200">OUTPUT</span>
+                                    <span class="font-bold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200">DISPLAY</span>
+                                    <span class="font-bold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200">PRINT</span>
+                                    <span class="font-bold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200">SHOW</span>
+                                    <span class="font-bold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200">WRITE</span>
+                                    <span class="font-bold text-teal-700 bg-teal-50 px-1.5 py-0.5 rounded border border-teal-200">PROMPT</span>
+                                </div>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>แสดงผล, แสดง, พิมพ์ หรือบันทึก</b> ค่าของตัวแปร หรือ ข้อความสตริง ออกทางหน้าจอ
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                DISPLAY "Hello World"<br>
+                                SHOW A + B<br>
+                                OUTPUT total<br>
+                                PRINT "ยอดสุทธิ: ", payment
+                            </td>
+                        </tr>
+
+                        <!-- 10. COMPARE -->
+                        <tr class="pseudo-row" data-cat="control">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-orange-700 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200">COMPARE</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>การเปรียบเทียบค่า</b> ระหว่างตัวแปรหรือข้อมูลสองตัว
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                COMPARE A, B
+                            </td>
+                        </tr>
+
+                        <!-- 11. IF THEN / IF THEN ELSE -->
+                        <tr class="pseudo-row" data-cat="control">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-orange-700 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200">IF..THEN</span>
+                                <span class="font-bold text-orange-700 bg-orange-50 px-1.5 py-0.5 rounded border border-orange-200 ml-1">IF..ELSE</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>คำสั่งตรวจสอบเงื่อนไข</b> หากเงื่อนไขเป็นจริง (TRUE) ให้ทำตามคำสั่งใน THEN หากเป็นเท็จ (FALSE) ให้ทำใน ELSE
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                IF (A > B) THEN<br>
+                                &nbsp;&nbsp;OUTPUT A<br>
+                                ELSE<br>
+                                &nbsp;&nbsp;OUTPUT B<br>
+                                END IF
+                            </td>
+                        </tr>
+
+                        <!-- 12. FOR LOOP -->
+                        <tr class="pseudo-row" data-cat="control">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-green-700 bg-green-50 px-1.5 py-0.5 rounded border border-green-200">FOR..TO</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>คำสั่งวนซ้ำแบบทราบจำนวนรอบแน่นอน</b> โดยมีตัวแปรนับรอบ (Counter) คอยเพิ่มค่าทีละ 1 จนถึงขอบเขตที่ระบุ
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                FOR i = 1 TO 5<br>
+                                &nbsp;&nbsp;INPUT price<br>
+                                &nbsp;&nbsp;total = total + price<br>
+                                END FOR
+                            </td>
+                        </tr>
+
+                        <!-- 13. WHILE LOOP -->
+                        <tr class="pseudo-row" data-cat="control">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">WHILE..DO</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>คำสั่งวนซ้ำแบบตรวจสอบเงื่อนไขก่อนทำ</b> หากเป็นจริงจึงทำงานในลูป หากเป็นเท็จจะข้ามทันที (รอบขั้นต่ำคือ 0 รอบ)
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                WHILE price > 0 DO<br>
+                                &nbsp;&nbsp;total = total + price<br>
+                                &nbsp;&nbsp;INPUT price<br>
+                                END WHILE
+                            </td>
+                        </tr>
+
+                        <!-- 14. DO..WHILE LOOP -->
+                        <tr class="pseudo-row" data-cat="control">
+                            <td class="p-3 border-r font-mono">
+                                <span class="font-bold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded border border-purple-200">DO..WHILE</span>
+                            </td>
+                            <td class="p-3 border-r">
+                                <b>คำสั่งวนซ้ำแบบทำคำสั่งก่อน 1 รอบ</b> แล้วค่อยตรวจเงื่อนไขตอนจบ หากจริงให้ทำซ้ำต่อ หากเท็จให้หยุด (รอบขั้นต่ำคือ 1 รอบเสมอ)
+                            </td>
+                            <td class="p-3 font-mono text-[11px] text-slate-600 dark:text-slate-300">
+                                DO<br>
+                                &nbsp;&nbsp;INPUT quantity<br>
+                                WHILE quantity <= 0
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            
+            <p class="text-[11px] text-[var(--muted-foreground,#64748b)] text-center mt-2">
+                💡 <b>คำแนะนำ:</b> รหัสเทียมไม่มีไวยากรณ์ตายตัวเท่าภาษาจริง จึงใช้คำที่ความหมายใกล้เคียงกันแทนได้ เช่น <code>INPUT</code> กับ <code>GET</code> หรือ <code>OUTPUT</code> กับ <code>DISPLAY</code>
+            </p>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 6: สัญลักษณ์ผังงาน (Flowchart) -->
+        <!-- ============================================== -->
+        <div id="slide-6" class="slide w-full">
+            <div class="text-center mb-3">
                 <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full">จำรูปทรงให้แม่น</span>
-                <h2 class="text-2xl md:text-3xl font-black mt-2">4. สัญลักษณ์ผังงานมาตรฐาน (Flowchart)</h2>
+                <h2 class="text-2xl md:text-3xl font-black mt-2">5. สัญลักษณ์ผังงานมาตรฐาน (Flowchart)</h2>
                 <p class="text-xs md:text-sm text-[var(--muted-foreground,#64748b)]">คลิกสัญลักษณ์แต่ละอันเพื่อดูความหมายและตัวอย่างคำสั่งรหัสเทียม</p>
             </div>
 
@@ -404,12 +682,12 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 6: 3 โครงสร้างการทำงาน & Loop Visualizer -->
+        <!-- SLIDE 7: 3 โครงสร้างการทำงาน & Loop Visualizer -->
         <!-- ============================================== -->
-        <div id="slide-6" class="slide w-full">
+        <div id="slide-7" class="slide w-full">
             <div class="text-center mb-3">
                 <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full">โครงสร้างควบคุม</span>
-                <h2 class="text-2xl md:text-3xl font-black mt-2">5. โครงสร้างการทำงาน 3 แบบ & เจาะลึก Loop</h2>
+                <h2 class="text-2xl md:text-3xl font-black mt-2">6. โครงสร้างการทำงาน 3 แบบ & เจาะลึก Loop</h2>
                 <p class="text-xs md:text-sm text-[var(--muted-foreground,#64748b)]">อัลกอริทึมทุกโปรแกรมบนโลกนี้ประกอบด้วย 3 โครงสร้างนี้เท่านั้น</p>
             </div>
 
@@ -463,12 +741,12 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 7: Desk Check Live Player -->
+        <!-- SLIDE 8: Desk Check Live Player -->
         <!-- ============================================== -->
-        <div id="slide-7" class="slide w-full">
+        <div id="slide-8" class="slide w-full">
             <div class="text-center mb-3">
                 <span class="px-3 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded-full">เทคนิคตรวจสอบโค้ด</span>
-                <h2 class="text-2xl md:text-3xl font-black mt-2">6. เครื่องจำลอง Desk Check (การไล่ค่าในตาราง)</h2>
+                <h2 class="text-2xl md:text-3xl font-black mt-2">7. เครื่องจำลอง Desk Check (การไล่ค่าในตาราง)</h2>
                 <p class="text-xs md:text-sm text-[var(--muted-foreground,#64748b)]">คือการเอาปากกาทดค่าตัวแปรทีละบรรทัดด้วยตา เพื่อหา <b>Logic Error</b></p>
             </div>
 
@@ -526,9 +804,9 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 8: เข้าสู่โซน Paper Coding Arena -->
+        <!-- SLIDE 9: เข้าสู่โซน Paper Coding Arena -->
         <!-- ============================================== -->
-        <div id="slide-8" class="slide w-full my-auto text-center">
+        <div id="slide-9" class="slide w-full my-auto text-center">
             <div class="bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-8 md:p-12 rounded-3xl shadow-xl max-w-3xl mx-auto">
                 <div class="text-6xl mb-4">✍️</div>
                 <h1 class="text-3xl md:text-5xl font-black mb-3">เข้าสู่โซน Challenge!</h1>
@@ -548,10 +826,9 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 9: ภารกิจ 1 - หาพื้นที่สี่เหลี่ยมผืนผ้า (ลำดับ) -->
+        <!-- SLIDE 10: ภารกิจ 1 - หาพื้นที่สี่เหลี่ยมผืนผ้า (ลำดับ) -->
         <!-- ============================================== -->
-        <div id="slide-9" class="slide w-full">
-            <!-- Header Task -->
+        <div id="slide-10" class="slide w-full">
             <div class="flex items-center justify-between mb-3 border-b pb-2">
                 <div>
                     <span class="text-xs font-bold px-2.5 py-0.5 bg-blue-100 text-blue-700 rounded-full">ภารกิจที่ 1 / 9</span>
@@ -560,7 +837,6 @@
                 <span class="text-2xl">📐</span>
             </div>
 
-            <!-- Problem Card -->
             <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
                 <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
                     <b>โจทย์:</b> จงเขียนอัลกอริทึมและรหัสเทียม (Pseudocode) รับค่า <b>ความกว้าง</b> และ <b>ความยาว</b> ของสี่เหลี่ยมผืนผ้า จากนั้นคำนวณหา <b>พื้นที่</b> แล้วแสดงผลลัพธ์ออกทางจอภาพ
@@ -571,10 +847,7 @@
                 </div>
             </div>
 
-            <!-- Interactive Action Toolbar -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
-                
-                <!-- Hints & Solution Collapse -->
                 <div class="space-y-2">
                     <button onclick="toggleBox('hint-1')" class="w-full py-2 px-3 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl text-xs font-bold border text-left flex justify-between items-center">
                         <span>💡 กดดูคำใบ้กรอบวิเคราะห์ (IPO & ตัวแปร)</span>
@@ -602,7 +875,6 @@
                     </div>
                 </div>
 
-                <!-- Live Test Bench -->
                 <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-3 rounded-2xl shadow-sm text-xs">
                     <h4 class="font-bold text-blue-600 mb-2">🧪 แท่นทดสอบโปรแกรม (Test Bench):</h4>
                     <div class="grid grid-cols-2 gap-2 mb-2">
@@ -619,17 +891,16 @@
                         จำลองการรันเพื่อเช็คคำตอบ ▶
                     </button>
                     <div id="tb1-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-blue-700">
-                        OUTPUT: 200
+                        OUTPUT: 200 ตารางหน่วย
                     </div>
                 </div>
-
             </div>
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 10: ภารกิจ 2 - ปริมาตรทรงกระบอก (ค่าคงที่ PI) -->
+        <!-- SLIDE 11: ภารกิจ 2 - ปริมาตรทรงกระบอก (ค่าคงที่ PI) -->
         <!-- ============================================== -->
-        <div id="slide-10" class="slide w-full">
+        <div id="slide-11" class="slide w-full">
             <div class="flex items-center justify-between mb-3 border-b pb-2">
                 <div>
                     <span class="text-xs font-bold px-2.5 py-0.5 bg-purple-100 text-purple-700 rounded-full">ภารกิจที่ 2 / 9</span>
@@ -640,7 +911,7 @@
 
             <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
                 <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
-                    <b>โจทย์:</b> รับค่าความสูง (H) และรัศมี (R) ของทรงกระบอก คำนวณหาปริมาตรโดยกำหนดให้ค่า $\pi$ เป็น <b>ค่าคงที่เท่ากับ 3.14</b> (สูตร: $Volume = \pi \times R \times R \times H$)
+                    <b>โจทย์:</b> รับค่าความสูง (H) และรัศมี (R) ของทรงกระบอก คำนวณหาปริมาตรโดยกำหนดให้ค่า $\pi$ เป็น <b>ค่าคงที่เท่ากับ 3.14</b> (สูตร: $Volume = \pi 	imes R 	imes R 	imes H$)
                 </p>
                 <div class="mt-2 p-2 bg-purple-50 dark:bg-purple-950/40 rounded-xl border border-purple-200 text-xs text-purple-800 dark:text-purple-300 flex items-center space-x-2">
                     <span>✍️</span>
@@ -699,9 +970,9 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 11: ภารกิจ 3 - คำนวณดัชนีมวลกาย BMI -->
+        <!-- SLIDE 12: ภารกิจ 3 - คำนวณดัชนีมวลกาย BMI -->
         <!-- ============================================== -->
-        <div id="slide-11" class="slide w-full">
+        <div id="slide-12" class="slide w-full">
             <div class="flex items-center justify-between mb-3 border-b pb-2">
                 <div>
                     <span class="text-xs font-bold px-2.5 py-0.5 bg-teal-100 text-teal-700 rounded-full">ภารกิจที่ 3 / 9</span>
@@ -712,7 +983,7 @@
 
             <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-4 rounded-2xl shadow-sm mb-3">
                 <p class="text-sm font-semibold text-[var(--foreground,#0f172a)]">
-                    <b>โจทย์:</b> รับค่า <b>น้ำหนัก (weight เป็นกิโลกรัม)</b> และ <b>ส่วนสูง (height เป็นเมตร)</b> คำนวณหาค่า BMI ตามสูตร: $BMI = weight / (height \times height)$ แล้วแสดงผล
+                    <b>โจทย์:</b> รับค่า <b>น้ำหนัก (weight เป็นกิโลกรัม)</b> และ <b>ส่วนสูง (height เป็นเมตร)</b> คำนวณหาค่า BMI ตามสูตร: $BMI = weight / (height 	imes height)$ แล้วแสดงผล
                 </p>
                 <div class="mt-2 p-2 bg-teal-50 dark:bg-teal-950/40 rounded-xl border border-teal-200 text-xs text-teal-800 dark:text-teal-300 flex items-center space-x-2">
                     <span>✍️</span>
@@ -769,9 +1040,9 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 12: ภารกิจ 4 - ส่วนลด 1 เงื่อนไข (IF..THEN) -->
+        <!-- SLIDE 13: ภารกิจ 4 - ส่วนลด 1 เงื่อนไข (IF..THEN) -->
         <!-- ============================================== -->
-        <div id="slide-12" class="slide w-full">
+        <div id="slide-13" class="slide w-full">
             <div class="flex items-center justify-between mb-3 border-b pb-2">
                 <div>
                     <span class="text-xs font-bold px-2.5 py-0.5 bg-amber-100 text-amber-700 rounded-full">ภารกิจที่ 4 / 9</span>
@@ -836,9 +1107,9 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 13: ภารกิจ 5 - ส่วนลด 2 ทางเลือก (IF..ELSE) -->
+        <!-- SLIDE 14: ภารกิจ 5 - ส่วนลด 2 ทางเลือก (IF..ELSE) -->
         <!-- ============================================== -->
-        <div id="slide-13" class="slide w-full">
+        <div id="slide-14" class="slide w-full">
             <div class="flex items-center justify-between mb-3 border-b pb-2">
                 <div>
                     <span class="text-xs font-bold px-2.5 py-0.5 bg-orange-100 text-orange-700 rounded-full">ภารกิจที่ 5 / 9</span>
@@ -899,16 +1170,16 @@
                         คำนวณส่วนลด & ยอดชำระ ▶
                     </button>
                     <div id="tb5-out" class="mt-2 p-2 bg-[var(--background,#f1f5f9)] rounded text-center font-mono font-bold text-orange-700">
-                        ลด: 40 บาท | จ่ายจริง: 760 บาท
+                        ลด: 40 บ. | จ่ายจริง: 760 บ.
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 14: ภารกิจ 6 - ส่วนลดขั้นบันได (IF..ELSE IF) -->
+        <!-- SLIDE 15: ภารกิจ 6 - ส่วนลดขั้นบันได (IF..ELSE IF) -->
         <!-- ============================================== -->
-        <div id="slide-14" class="slide w-full">
+        <div id="slide-15" class="slide w-full">
             <div class="flex items-center justify-between mb-3 border-b pb-2">
                 <div>
                     <span class="text-xs font-bold px-2.5 py-0.5 bg-red-100 text-red-700 rounded-full">ภารกิจที่ 6 / 9</span>
@@ -984,9 +1255,9 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 15: ภารกิจ 7 - รับราคาสินค้า 5 ชิ้น (FOR Loop) -->
+        <!-- SLIDE 16: ภารกิจ 7 - รับราคาสินค้า 5 ชิ้น (FOR Loop) -->
         <!-- ============================================== -->
-        <div id="slide-15" class="slide w-full">
+        <div id="slide-16" class="slide w-full">
             <div class="flex items-center justify-between mb-3 border-b pb-2">
                 <div>
                     <span class="text-xs font-bold px-2.5 py-0.5 bg-green-100 text-green-700 rounded-full">ภารกิจที่ 7 / 9</span>
@@ -1049,9 +1320,9 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 16: ภารกิจ 8 - ป้อนราคาจนกว่าจะใส่ 0 (WHILE Loop) -->
+        <!-- SLIDE 17: ภารกิจ 8 - ป้อนราคาจนกว่าจะใส่ 0 (WHILE Loop) -->
         <!-- ============================================== -->
-        <div id="slide-16" class="slide w-full">
+        <div id="slide-17" class="slide w-full">
             <div class="flex items-center justify-between mb-3 border-b pb-2">
                 <div>
                     <span class="text-xs font-bold px-2.5 py-0.5 bg-blue-100 text-blue-700 rounded-full">ภารกิจที่ 8 / 9</span>
@@ -1117,9 +1388,9 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 17: ภารกิจ 9 - ตรวจสอบจำนวนสินค้า (DO..WHILE) -->
+        <!-- SLIDE 18: ภารกิจ 9 - ตรวจสอบจำนวนสินค้า (DO..WHILE) -->
         <!-- ============================================== -->
-        <div id="slide-17" class="slide w-full">
+        <div id="slide-18" class="slide w-full">
             <div class="flex items-center justify-between mb-3 border-b pb-2">
                 <div>
                     <span class="text-xs font-bold px-2.5 py-0.5 bg-violet-100 text-violet-700 rounded-full">ภารกิจที่ 9 / 9</span>
@@ -1178,9 +1449,9 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- SLIDE 18: สรุปเช็กลิสต์ก่อนเข้าห้องสอบ -->
+        <!-- SLIDE 19: สรุปเช็กลิสต์ก่อนเข้าห้องสอบ -->
         <!-- ============================================== -->
-        <div id="slide-18" class="slide w-full my-auto text-center">
+        <div id="slide-19" class="slide w-full my-auto text-center">
             <div class="bg-[var(--card,#ffffff)] border border-[var(--border,#e2e8f0)] p-8 rounded-3xl shadow-lg max-w-3xl mx-auto">
                 <div class="text-6xl mb-4">🏆</div>
                 <h2 class="text-3xl font-black mb-2 text-[var(--foreground,#0f172a)]">สรุปเช็กลิสต์ & ขอให้ทุกคนโชคดี!</h2>
@@ -1209,8 +1480,11 @@
                     <button onclick="jumpToSlide(1)" class="px-6 py-2.5 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 rounded-xl font-bold text-xs border">
                         🔄 เริ่มทบทวนใหม่ตั้งแต่หน้าแรก
                     </button>
-                    <button onclick="jumpToSlide(9)" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs">
-                        ✍️ กลับไปฝึกทำโจทย์อีกรอบ
+                    <button onclick="jumpToSlide(5)" class="px-6 py-2.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-xl font-bold text-xs border border-blue-300">
+                        📋 ดูตารางคำสั่งรหัสเทียม
+                    </button>
+                    <button onclick="jumpToSlide(10)" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-xs">
+                        ✍️ ฝึกทำโจทย์อีกรอบ
                     </button>
                 </div>
             </div>
@@ -1219,13 +1493,13 @@
     </main>
 
     <!-- Bottom Controls & Key hints -->
-    <footer class="bg-[var(--card,#ffffff)] border-t border-[var(--border,#e2e8f0)] px-6 py-3 flex justify-between items-center shrink-0 shadow-[0_-2px_6px_rgba(0,0,0,0.05)] z-30">
+    <footer class="bg-[var(--card,#ffffff)] border-t border-[var(--border,#e2e8f0)] px-6 py-2.5 flex justify-between items-center shrink-0 shadow-[0_-2px_6px_rgba(0,0,0,0.05)] z-30">
         <button id="prevBtn" onclick="prevSlide()" class="px-4 py-2 bg-[var(--background,#f1f5f9)] hover:bg-slate-200 text-xs font-bold rounded-xl border disabled:opacity-30 disabled:cursor-not-allowed transition flex items-center space-x-1">
             <span>◀ ก่อนหน้า</span>
         </button>
 
         <div class="text-center">
-            <span id="slide-info-text" class="text-xs font-bold text-slate-700 dark:text-slate-300">หน้า 1 / 18</span>
+            <span id="slide-info-text" class="text-xs font-bold text-slate-700 dark:text-slate-300">หน้า 1 / 19</span>
             <span class="hidden sm:inline text-[10px] text-[var(--muted-foreground,#64748b)] block">(กดแป้นพิมพ์ ⬅️ หรือ ➡️ ได้)</span>
         </div>
 
@@ -1237,7 +1511,7 @@
     <!-- INTERACTIVE JAVASCRIPT LOGIC -->
     <script>
         let currentSlide = 1;
-        const totalSlides = 18;
+        const totalSlides = 19;
 
         function updateUI() {
             document.querySelectorAll('.slide').forEach(el => el.classList.remove('active'));
@@ -1286,6 +1560,35 @@
         function toggleBox(id) {
             const el = document.getElementById(id);
             if (el) el.classList.toggle('hidden');
+        }
+
+        // ==========================================
+        // 0. PSEUDOCODE TABLE FILTER & SEARCH
+        // ==========================================
+        function filterPseudo(category, btn) {
+            document.querySelectorAll('.pseudo-btn').forEach(b => {
+                b.className = "pseudo-btn px-2.5 py-1 rounded-lg bg-[var(--background,#f1f5f9)] hover:bg-slate-200 text-slate-700 font-medium border";
+            });
+            btn.className = "pseudo-btn px-2.5 py-1 rounded-lg bg-blue-600 text-white font-bold border border-blue-600";
+
+            const rows = document.querySelectorAll('.pseudo-row');
+            rows.forEach(r => {
+                if (category === 'all' || r.dataset.cat === category) {
+                    r.style.display = '';
+                } else {
+                    r.style.display = 'none';
+                }
+            });
+            document.getElementById('pseudo-search').value = '';
+        }
+
+        function searchPseudoTable() {
+            const query = document.getElementById('pseudo-search').value.toLowerCase();
+            const rows = document.querySelectorAll('.pseudo-row');
+            rows.forEach(r => {
+                const text = r.innerText.toLowerCase();
+                r.style.display = text.includes(query) ? '' : 'none';
+            });
         }
 
         // ==========================================
@@ -1444,7 +1747,6 @@
             if (dcStep >= dcSteps.length) return;
             const item = dcSteps[dcStep];
             
-            // clear highlight code
             for (let i = 1; i <= 6; i++) {
                 const el = document.getElementById(`dc-code-${i}`);
                 if (el) el.className = (i === item.line) ? "p-1 rounded bg-blue-600 text-white font-bold" : "p-1 rounded text-slate-300";
